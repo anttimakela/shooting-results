@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.1.3 =
+* The AJAX request now always uses the current page's protocol (http/https), instead of whatever admin_url() resolved server-side, to rule out a scheme mismatch under local-dev SSL proxies looking like a cross-origin request.
 
 = 1.1.2 =
 * Fixed: some server-level security rules 404'd the plugin's AJAX requests because fetch() (unlike jQuery.ajax()) doesn't send an `X-Requested-With` header by default — now sent explicitly.

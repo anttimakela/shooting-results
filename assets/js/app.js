@@ -15,9 +15,18 @@
 		return ( SR.i18n && SR.i18n[ key ] ) || key;
 	}
 
+	function ajaxUrl() {
+		// Force the current page's protocol, in case the site's configured
+		// scheme (what admin_url() used server-side) doesn't match how this
+		// page actually loaded — e.g. behind a local-dev SSL proxy — which
+		// would otherwise make this request look cross-origin/mixed-content
+		// even though it's really the same site.
+		return SR.ajaxUrl.replace( /^https?:/, window.location.protocol );
+	}
+
 	function request( action, data ) {
 		var body = new URLSearchParams( Object.assign( { action: action, nonce: SR.nonce, post_id: SR.postId }, data || {} ) );
-		return fetch( SR.ajaxUrl, {
+		return fetch( ajaxUrl(), {
 			method: 'POST',
 			credentials: 'same-origin',
 			headers: {
