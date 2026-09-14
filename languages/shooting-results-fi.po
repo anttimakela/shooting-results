@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Shooting Results 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/shooting-results\n"
-"POT-Creation-Date: 2026-09-14T10:29:26+00:00\n"
+"POT-Creation-Date: 2026-09-14T11:53:01+00:00\n"
 "PO-Revision-Date: 2026-09-14 14:00+0200\n"
 "Last-Translator: Antti Mäkelä\n"
 "Language-Team: Finnish\n"
@@ -16,7 +16,7 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: shooting-results.php includes/class-sr-admin-page.php:23
-#: includes/class-sr-admin-page.php:24 includes/class-sr-admin-page.php:52
+#: includes/class-sr-admin-page.php:24 includes/class-sr-admin-page.php:63
 msgid "Shooting Results"
 msgstr "Shooting Results"
 
@@ -43,15 +43,27 @@ msgstr ""
 msgid "Antti Mäkelä"
 msgstr "Antti Mäkelä"
 
-#: includes/class-sr-admin-page.php:46
+#: includes/class-sr-admin-page.php:49
+msgid ""
+"Delete this shooting session and all of its recorded results? This cannot be "
+"undone."
+msgstr ""
+"Poistetaanko tämä ammunta ja kaikki sen tallennetut tulokset? Tätä ei voi "
+"perua."
+
+#: includes/class-sr-admin-page.php:50 includes/class-sr-shortcode.php:126
+msgid "Something went wrong. Please try again."
+msgstr "Jokin meni pieleen. Yritä uudelleen."
+
+#: includes/class-sr-admin-page.php:57
 msgid "You do not have permission to access this page."
 msgstr "Sinulla ei ole oikeutta käyttää tätä sivua."
 
-#: includes/class-sr-admin-page.php:55
+#: includes/class-sr-admin-page.php:66
 msgid "1. Add results recording to a page"
 msgstr "1. Lisää tuloskirjaus sivulle"
 
-#: includes/class-sr-admin-page.php:56
+#: includes/class-sr-admin-page.php:67
 msgid ""
 "Create (or pick) a page, paste this shortcode into it, and publish. That "
 "page becomes the results-recording screen — it works on phones, tablets, and "
@@ -61,20 +73,20 @@ msgstr ""
 "tulee tuloskirjausnäkymä — se toimii puhelimilla, tableteilla ja "
 "tietokoneilla."
 
-#: includes/class-sr-admin-page.php:59
+#: includes/class-sr-admin-page.php:70
 msgid "Copy shortcode"
 msgstr "Kopioi lyhytkoodi"
 
-#: includes/class-sr-admin-page.php:60
+#: includes/class-sr-admin-page.php:71
 msgid "Copied!"
 msgstr "Kopioitu!"
 
-#: includes/class-sr-admin-page.php:63
+#: includes/class-sr-admin-page.php:74
 msgid "2. Restrict who can record results"
 msgstr "2. Rajoita, ketkä voivat kirjata tuloksia"
 
 #. translators: %s: the "Password Protected" visibility option, as labeled in the block editor.
-#: includes/class-sr-admin-page.php:68
+#: includes/class-sr-admin-page.php:79
 #, php-format
 msgid ""
 "On that page, open the editor's Visibility setting (in the Summary/Status "
@@ -85,11 +97,11 @@ msgstr ""
 "paneelissa) ja valitse %s. Jaa salasana vain sille, joka kirjaa tuloksia "
 "kyseisenä päivänä."
 
-#: includes/class-sr-admin-page.php:69
+#: includes/class-sr-admin-page.php:80
 msgid "Password Protected"
 msgstr "Salasanasuojattu"
 
-#: includes/class-sr-admin-page.php:73
+#: includes/class-sr-admin-page.php:84
 msgid ""
 "No WordPress account is needed to record results — just the page password. "
 "That also means recording can continue on a different device mid-"
@@ -101,205 +113,253 @@ msgstr ""
 "laitteella kesken kilpailun: seuraava kirjaaja avaa saman sivun, syöttää "
 "salasanan ja valitsee listalta kesken olevan ammunnan."
 
-#: includes/class-sr-ajax.php:51
+#: includes/class-sr-admin-page.php:98 includes/class-sr-shortcode.php:98
+#: includes/class-sr-shortcode.php:108
+msgid "Sessions"
+msgstr "Ammunnat"
+
+#: includes/class-sr-admin-page.php:100
+msgid "No sessions recorded yet."
+msgstr "Ei vielä tallennettuja ammuntoja."
+
+#: includes/class-sr-admin-page.php:105
+msgid "Date"
+msgstr "Päivämäärä"
+
+#: includes/class-sr-admin-page.php:106
+msgid "Discipline"
+msgstr "Laji"
+
+#: includes/class-sr-admin-page.php:107
+msgid "Status"
+msgstr "Tila"
+
+#: includes/class-sr-admin-page.php:118 includes/class-sr-shortcode.php:129
+msgid "Shotgun"
+msgstr "Haulikko"
+
+#: includes/class-sr-admin-page.php:120 includes/class-sr-shortcode.php:102
+msgid "shots per round"
+msgstr "laukausta / kierros"
+
+#: includes/class-sr-admin-page.php:125 includes/class-sr-shortcode.php:101
+msgid "Sent"
+msgstr "Lähetetty"
+
+#: includes/class-sr-admin-page.php:125 includes/class-sr-shortcode.php:100
+msgid "Draft"
+msgstr "Luonnos"
+
+#: includes/class-sr-admin-page.php:129
+msgid "Delete"
+msgstr "Poista"
+
+#: includes/class-sr-ajax.php:44 includes/class-sr-ajax.php:90
 msgid "You do not have permission to do this."
 msgstr "Sinulla ei ole oikeutta tähän toimintoon."
 
-#: includes/class-sr-ajax.php:55
-msgid "This page is password protected."
-msgstr "Tämä sivu on salasanasuojattu."
-
-#: includes/class-sr-ajax.php:95
-msgid "Invalid number of shots per round."
-msgstr "Virheellinen laukausten määrä kierrosta kohden."
-
-#: includes/class-sr-ajax.php:135
-msgid "Enter a name."
-msgstr "Syötä nimi."
-
-#: includes/class-sr-ajax.php:138 includes/class-sr-ajax.php:184
+#: includes/class-sr-ajax.php:54 includes/class-sr-ajax.php:195
+#: includes/class-sr-ajax.php:241
 msgid "Invalid session."
 msgstr "Virheellinen ammunta."
 
-#: includes/class-sr-ajax.php:207
+#: includes/class-sr-ajax.php:94
+msgid "This page is password protected."
+msgstr "Tämä sivu on salasanasuojattu."
+
+#: includes/class-sr-ajax.php:150
+msgid "Invalid number of shots per round."
+msgstr "Virheellinen laukausten määrä kierrosta kohden."
+
+#: includes/class-sr-ajax.php:192
+msgid "Enter a name."
+msgstr "Syötä nimi."
+
+#: includes/class-sr-ajax.php:286
 msgid "Entry not found."
 msgstr "Tulosriviä ei löytynyt."
 
-#: includes/class-sr-ajax.php:212
+#: includes/class-sr-ajax.php:291
 msgid "Invalid shot index."
 msgstr "Virheellinen laukausnumero."
 
-#: includes/class-sr-ajax.php:220
-msgid "A shot score must be between 0 and 10."
-msgstr "Laukaustuloksen on oltava välillä 0–10."
+#: includes/class-sr-ajax.php:303
+msgid "That score is too high."
+msgstr "Tulos on liian suuri."
 
-#: includes/class-sr-ajax.php:255
+#: includes/class-sr-ajax.php:338
 msgid "Session not found."
 msgstr "Ammuntaa ei löytynyt."
 
-#: includes/class-sr-ajax.php:296
+#: includes/class-sr-ajax.php:379
 msgid "Enter a valid email address."
 msgstr "Syötä kelvollinen sähköpostiosoite."
 
-#: includes/class-sr-ajax.php:323 includes/class-sr-mailer.php:27
+#: includes/class-sr-ajax.php:406 includes/class-sr-mailer.php:27
 msgid "Results session not found."
 msgstr "Tulosammuntaa ei löytynyt."
 
-#: includes/class-sr-mailer.php:53 includes/class-sr-mailer.php:87
-#: includes/class-sr-shortcode.php:86
+#: includes/class-sr-mailer.php:53 includes/class-sr-mailer.php:91
+#: includes/class-sr-shortcode.php:112
 msgid "Shooter"
 msgstr "Ampuja"
 
-#: includes/class-sr-mailer.php:57 includes/class-sr-mailer.php:87
-#: includes/class-sr-shortcode.php:87
+#: includes/class-sr-mailer.php:55 includes/class-sr-shortcode.php:131
+msgid "Result"
+msgstr "Tulos"
+
+#: includes/class-sr-mailer.php:61 includes/class-sr-mailer.php:91
+#: includes/class-sr-shortcode.php:113
 msgid "Total"
 msgstr "Yhteensä"
 
 #. translators: %d: round number
-#: includes/class-sr-mailer.php:83
+#: includes/class-sr-mailer.php:87
 #, php-format
 msgid "Round %d"
 msgstr "Kierros %d"
 
-#: includes/class-sr-mailer.php:87
+#: includes/class-sr-mailer.php:91
 msgid "Rounds"
 msgstr "Kierroksia"
 
-#: includes/class-sr-mailer.php:96
+#: includes/class-sr-mailer.php:100
 msgid "Summary"
 msgstr "Yhteenveto"
 
 #. translators: %s: date
-#: includes/class-sr-mailer.php:104
+#: includes/class-sr-mailer.php:108
 #, php-format
 msgid "Shooting results – %s"
 msgstr "Ammuntatulokset – %s"
 
-#: includes/class-sr-mailer.php:105
+#: includes/class-sr-mailer.php:109
 msgid "The shooting results are attached as an Excel file."
 msgstr "Liitteenä ammunnan tulokset Excel-tiedostona."
 
-#: includes/class-sr-mailer.php:112
+#: includes/class-sr-mailer.php:116
 msgid ""
 "Sending the report email failed. Check the site's SMTP/mail configuration."
 msgstr ""
 "Raporttisähköpostin lähetys epäonnistui. Tarkista sivuston SMTP/"
 "sähköpostiasetukset."
 
-#: includes/class-sr-shortcode.php:71
+#: includes/class-sr-shortcode.php:97
 msgid "Record Results"
 msgstr "Kirjaa tulokset"
 
-#: includes/class-sr-shortcode.php:72 includes/class-sr-shortcode.php:82
-msgid "Sessions"
-msgstr "Ammunnat"
-
-#: includes/class-sr-shortcode.php:73
+#: includes/class-sr-shortcode.php:99
 msgid "No sessions yet. Start with \"Record Results\"."
 msgstr "Ei vielä ammuntoja. Aloita painamalla \"Kirjaa tulokset\"."
 
-#: includes/class-sr-shortcode.php:74
-msgid "Draft"
-msgstr "Luonnos"
-
-#: includes/class-sr-shortcode.php:75
-msgid "Sent"
-msgstr "Lähetetty"
-
-#: includes/class-sr-shortcode.php:76
-msgid "shots per round"
-msgstr "laukausta / kierros"
-
-#: includes/class-sr-shortcode.php:77
+#: includes/class-sr-shortcode.php:103
 msgid "New Shooting Session"
 msgstr "Uusi ammunta"
 
-#: includes/class-sr-shortcode.php:78
+#: includes/class-sr-shortcode.php:104
 msgid "Choose the number of shots per round."
 msgstr "Valitse laukausten määrä kierrosta kohden."
 
-#: includes/class-sr-shortcode.php:79
+#: includes/class-sr-shortcode.php:105
 msgid "Other"
 msgstr "Muu"
 
-#: includes/class-sr-shortcode.php:80
+#: includes/class-sr-shortcode.php:106
 msgid "Cancel"
 msgstr "Peruuta"
 
-#: includes/class-sr-shortcode.php:81
+#: includes/class-sr-shortcode.php:107
 msgid "Start"
 msgstr "Aloita"
 
-#: includes/class-sr-shortcode.php:83
+#: includes/class-sr-shortcode.php:109
 msgid "Saved"
 msgstr "Tallennettu"
 
-#: includes/class-sr-shortcode.php:84
+#: includes/class-sr-shortcode.php:110
 msgid "Saving…"
 msgstr "Tallennetaan…"
 
-#: includes/class-sr-shortcode.php:85
+#: includes/class-sr-shortcode.php:111
 msgid "Round"
 msgstr "Kierros"
 
-#: includes/class-sr-shortcode.php:88
+#: includes/class-sr-shortcode.php:114
 msgid "Remove shooter"
 msgstr "Poista ampuja"
 
-#: includes/class-sr-shortcode.php:89
+#: includes/class-sr-shortcode.php:115
 msgid ""
 "Remove this shooter from upcoming rounds? Past rounds are kept in the report."
 msgstr ""
 "Poistetaanko ampuja tulevilta kierroksilta? Aiemmat kierrokset säilyvät "
 "raportissa."
 
-#: includes/class-sr-shortcode.php:90
+#: includes/class-sr-shortcode.php:116
 msgid "Shooter name"
 msgstr "Ampujan nimi"
 
-#: includes/class-sr-shortcode.php:91
+#: includes/class-sr-shortcode.php:117
 msgid "Add Shooter"
 msgstr "Lisää ampuja"
 
-#: includes/class-sr-shortcode.php:92
+#: includes/class-sr-shortcode.php:118
 msgid "Start New Round"
 msgstr "Aloita uusi kierros"
 
-#: includes/class-sr-shortcode.php:93
+#: includes/class-sr-shortcode.php:119
 msgid "Send Report"
 msgstr "Lähetä raportti"
 
-#: includes/class-sr-shortcode.php:94
+#: includes/class-sr-shortcode.php:120
 msgid "Email address"
 msgstr "Sähköpostiosoite"
 
-#: includes/class-sr-shortcode.php:95
+#: includes/class-sr-shortcode.php:121
 msgid "Send"
 msgstr "Lähetä"
 
-#: includes/class-sr-shortcode.php:96
+#: includes/class-sr-shortcode.php:122
 msgid "Report sent."
 msgstr "Raportti lähetetty."
 
-#: includes/class-sr-shortcode.php:97
+#: includes/class-sr-shortcode.php:123
 msgid "Last sent"
 msgstr "Lähetetty viimeksi"
 
-#: includes/class-sr-shortcode.php:98
+#: includes/class-sr-shortcode.php:124
 msgid "Shot"
 msgstr "Laukaus"
 
-#: includes/class-sr-shortcode.php:99
+#: includes/class-sr-shortcode.php:125
 msgid "Clear"
 msgstr "Tyhjennä"
 
-#: includes/class-sr-shortcode.php:100
-msgid "Something went wrong. Please try again."
-msgstr "Jokin meni pieleen. Yritä uudelleen."
-
-#: includes/class-sr-shortcode.php:101
+#: includes/class-sr-shortcode.php:127
 msgid "Continue open session"
 msgstr "Jatka kesken olevaa ammuntaa"
+
+#: includes/class-sr-shortcode.php:128
+msgid "Rifle"
+msgstr "Kivääri"
+
+#: includes/class-sr-shortcode.php:130
+msgid "Choose the discipline."
+msgstr "Valitse laji."
+
+#: includes/class-sr-shortcode.php:132
+msgid "Save"
+msgstr "Tallenna"
+
+#: includes/class-sr-shortcode.php:133
+msgid ""
+"Remove this shooter's entry from this round? Other rounds are not affected."
+msgstr ""
+"Poistetaanko ampujan tulos tältä kierrokselta? Muut kierrokset eivät "
+"muutu."
+
+#~ msgid "A shot score must be between 0 and 10."
+#~ msgstr "Laukaustuloksen on oltava välillä 0–10."
 
 #~ msgid ""
 #~ "Fast, big-button competition results recording for shooting ranges — "

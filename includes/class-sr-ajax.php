@@ -30,6 +30,45 @@ class SR_Ajax {
 			add_action( 'wp_ajax_' . $action, array( __CLASS__, $action ) );
 			add_action( 'wp_ajax_nopriv_' . $action, array( __CLASS__, $action ) );
 		}
+
+		// Admin-only: deleting a session is a destructive, whole-session
+		// action, so it lives on the wp-admin Settings page (manage_options)
+		// rather than being reachable from the password-gated front end.
+		// No _nopriv_ hook — logged-out visitors have no business here.
+		add_action( 'wp_ajax_sr_admin_delete_session', array( __CLASS__, 'sr_admin_delete_session' ) );
+	}
+
+	private static function admin_guard() {
+		check_ajax_referer( 'sr_admin_ajax', 'nonce' );
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_send_json_error( array( 'message' => __( 'You do not have permission to do this.', 'shooting-results' ) ), 403 );
+		}
+	}
+
+	public static function sr_admin_delete_session() {
+		self::admin_guard();
+		global $wpdb;
+
+		$session_id = isset( $_POST['session_id'] ) ? absint( $_POST['session_id'] ) : 0;
+		if ( ! $session_id ) {
+			wp_send_json_error( array( 'message' => __( 'Invalid session.', 'shooting-results' ) ), 400 );
+		}
+
+		$sessions_table = SR_DB::table( 'sessions' );
+		$shooters_table = SR_DB::table( 'shooters' );
+		$rounds_table   = SR_DB::table( 'rounds' );
+		$entries_table  = SR_DB::table( 'entries' );
+
+		$round_ids = $wpdb->get_col( $wpdb->prepare( "SELECT id FROM {$rounds_table} WHERE session_id = %d", $session_id ) );
+		if ( $round_ids ) {
+			$placeholders = implode( ',', array_fill( 0, count( $round_ids ), '%d' ) );
+			$wpdb->query( $wpdb->prepare( "DELETE FROM {$entries_table} WHERE round_id IN ({$placeholders})", $round_ids ) ); // phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared -- placeholders are a %d list built from count($round_ids), values are passed through prepare().
+		}
+		$wpdb->delete( $rounds_table, array( 'session_id' => $session_id ), array( '%d' ) );
+		$wpdb->delete( $shooters_table, array( 'session_id' => $session_id ), array( '%d' ) );
+		$wpdb->delete( $sessions_table, array( 'id' => $session_id ), array( '%d' ) );
+
+		wp_send_json_success();
 	}
 
 	/**
@@ -97,9 +136,19 @@ class SR_Ajax {
 		self::guard();
 		global $wpdb;
 
-		$shots_per_round = isset( $_POST['shots_per_round'] ) ? absint( $_POST['shots_per_round'] ) : 0;
-		if ( $shots_per_round < 1 || $shots_per_round > 200 ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid number of shots per round.', 'shooting-results' ) ), 400 );
+		$discipline = isset( $_POST['discipline'] ) && 'shotgun' === $_POST['discipline'] ? 'shotgun' : 'rifle';
+
+		// Shotgun rounds record one final result per round rather than a
+		// per-shot breakdown, so shots_per_round is always 1 regardless of
+		// what was posted — the client doesn't even ask for a number when
+		// shotgun is chosen.
+		if ( 'shotgun' === $discipline ) {
+			$shots_per_round = 1;
+		} else {
+			$shots_per_round = isset( $_POST['shots_per_round'] ) ? absint( $_POST['shots_per_round'] ) : 0;
+			if ( $shots_per_round < 1 || $shots_per_round > 200 ) {
+				wp_send_json_error( array( 'message' => __( 'Invalid number of shots per round.', 'shooting-results' ) ), 400 );
+			}
 		}
 
 		$sessions_table = SR_DB::table( 'sessions' );
@@ -111,9 +160,10 @@ class SR_Ajax {
 				'created_by'      => get_current_user_id(),
 				'created_at'      => self::now(),
 				'shots_per_round' => $shots_per_round,
+				'discipline'      => $discipline,
 				'status'          => 'draft',
 			),
-			array( '%d', '%s', '%d', '%s' )
+			array( '%d', '%s', '%d', '%s', '%s' )
 		);
 		$session_id = (int) $wpdb->insert_id;
 
@@ -193,8 +243,19 @@ class SR_Ajax {
 
 		$shooters_table = SR_DB::table( 'shooters' );
 		$entries_table  = SR_DB::table( 'entries' );
+		$rounds_table   = SR_DB::table( 'rounds' );
 
-		$wpdb->update( $shooters_table, array( 'active' => 0 ), array( 'id' => $shooter_id, 'session_id' => $session_id ), array( '%d' ), array( '%d', '%d' ) );
+		// Removing from any round always erases that round's entry; only
+		// removing from the *latest* round also deactivates the shooter so
+		// they stop being carried into future rounds. Removing them from an
+		// earlier round (fixing a mistake there) shouldn't also drop them
+		// out of rounds after it that are already in progress.
+		$latest_round_id = (int) $wpdb->get_var(
+			$wpdb->prepare( "SELECT id FROM {$rounds_table} WHERE session_id = %d ORDER BY round_number DESC LIMIT 1", $session_id )
+		);
+		if ( $round_id === $latest_round_id ) {
+			$wpdb->update( $shooters_table, array( 'active' => 0 ), array( 'id' => $shooter_id, 'session_id' => $session_id ), array( '%d' ), array( '%d', '%d' ) );
+		}
 		$wpdb->delete( $entries_table, array( 'round_id' => $round_id, 'shooter_id' => $shooter_id ), array( '%d', '%d' ) );
 
 		wp_send_json_success( self::build_session_state( $session_id ) );
@@ -208,8 +269,19 @@ class SR_Ajax {
 		$shot_index = isset( $_POST['shot_index'] ) ? absint( $_POST['shot_index'] ) : -1;
 		$raw_value  = isset( $_POST['value'] ) ? wp_unslash( $_POST['value'] ) : '';
 
-		$entries_table = SR_DB::table( 'entries' );
-		$entry         = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$entries_table} WHERE id = %d", $entry_id ) );
+		$entries_table  = SR_DB::table( 'entries' );
+		$rounds_table   = SR_DB::table( 'rounds' );
+		$sessions_table = SR_DB::table( 'sessions' );
+
+		$entry = $wpdb->get_row(
+			$wpdb->prepare(
+				"SELECT e.*, s.discipline FROM {$entries_table} e
+				JOIN {$rounds_table} r ON r.id = e.round_id
+				JOIN {$sessions_table} s ON s.id = r.session_id
+				WHERE e.id = %d",
+				$entry_id
+			)
+		);
 		if ( ! $entry ) {
 			wp_send_json_error( array( 'message' => __( 'Entry not found.', 'shooting-results' ) ), 404 );
 		}
@@ -222,9 +294,13 @@ class SR_Ajax {
 		if ( '' === $raw_value || null === $raw_value ) {
 			$shots[ $shot_index ] = null;
 		} else {
-			$value = absint( $raw_value );
-			if ( $value > 10 ) {
-				wp_send_json_error( array( 'message' => __( 'A shot score must be between 0 and 10.', 'shooting-results' ) ), 400 );
+			$value     = absint( $raw_value );
+			// Rifle shots are individually scored 0-10; a shotgun entry is a
+			// single final result (hits out of however many targets), which
+			// needs a much wider range.
+			$max_value = 'shotgun' === $entry->discipline ? 200 : 10;
+			if ( $value > $max_value ) {
+				wp_send_json_error( array( 'message' => __( 'That score is too high.', 'shooting-results' ) ), 400 );
 			}
 			$shots[ $shot_index ] = $value;
 		}
@@ -357,6 +433,7 @@ class SR_Ajax {
 				'id'              => (int) $session->id,
 				'created_at'      => $session->created_at,
 				'shots_per_round' => (int) $session->shots_per_round,
+				'discipline'      => $session->discipline,
 				'status'          => $session->status,
 				'report_email'    => $session->report_email,
 				'report_sent_at'  => $session->report_sent_at,

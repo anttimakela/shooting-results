@@ -94,7 +94,7 @@ special characters) during development.
 ## Data model
 
 ```
-wp_sr_sessions(id, created_by, created_at, shots_per_round, status, report_email, report_sent_at)
+wp_sr_sessions(id, created_by, created_at, shots_per_round, discipline, status, report_email, report_sent_at)
 wp_sr_shooters(id, session_id, name, sort_order, active)
 wp_sr_rounds(id, session_id, round_number, created_at)
 wp_sr_entries(id, round_id, shooter_id, shots JSON, updated_at)
@@ -105,9 +105,19 @@ literal "saved as a draft" behaviour that was asked for, just implemented as
 a database row from the first tap rather than a client-side draft that
 needs syncing.
 
-Removing a shooter (`sr_remove_shooter`) sets `active = 0` and deletes only
-their entry in the *current* round — their scores in earlier rounds stay in
-the database and in the exported report.
+`discipline` is `rifle` (per-shot 0–10 entries, `shots_per_round` chosen at
+session creation) or `shotgun` (`shots_per_round` is always 1 — a shotgun
+round records a single final result, e.g. hits out of however many
+targets, entered as one number up to 200 rather than a per-shot
+breakdown).
+
+Removing a shooter (`sr_remove_shooter`) always deletes their entry in
+*whichever round is currently being viewed* (any round, not just the
+latest — fixes a shooter mistakenly listed on an earlier round without
+touching later ones). It additionally sets `active = 0` — stopping them
+from being carried into future rounds — only when the round being edited
+is the session's latest one; removing them from an earlier round doesn't
+retroactively pull them out of later rounds already in progress.
 
 ## AJAX endpoints (`admin-ajax.php?action=...`)
 
@@ -122,10 +132,15 @@ also received, before touching the database.
 | `sr_create_session` | Start a new session + round 1 |
 | `sr_get_session` | Full nested state — used on load/refresh |
 | `sr_add_shooter` | Add a shooter to the current round |
-| `sr_remove_shooter` | Drop a shooter from future rounds |
-| `sr_set_shot` | Write one shot score (0–10 or empty) |
+| `sr_remove_shooter` | Drop a shooter from the round being viewed |
+| `sr_set_shot` | Write one shot/result score (0–10 rifle, 0–200 shotgun, or empty) |
 | `sr_start_new_round` | New round, active shooters carried over |
 | `sr_send_report` | Build the .xlsx from DB state and email it |
+
+`sr_admin_delete_session` is separate: it's wp-admin-only (`manage_options`,
+its own `sr_admin_ajax` nonce, no `_nopriv_` hook), reachable only from the
+Settings page's session list, since deleting a whole session is
+destructive and shouldn't be reachable from the password-gated front end.
 
 ## Translations
 

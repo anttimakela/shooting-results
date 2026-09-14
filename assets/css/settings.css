@@ -24,3 +24,12 @@
 	color: #3f7d33;
 	font-weight: 600;
 }
+
+.sr-sessions-table {
+	margin-top: 12px;
+}
+
+.sr-sessions-table th,
+.sr-sessions-table td {
+	padding: 8px 10px;
+}

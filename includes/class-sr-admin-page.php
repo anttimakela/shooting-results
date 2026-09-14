@@ -39,6 +39,17 @@ class SR_Admin_Page {
 
 		wp_enqueue_style( 'sr-settings', SR_PLUGIN_URL . 'assets/css/settings.css', array(), SR_VERSION );
 		wp_enqueue_script( 'sr-settings', SR_PLUGIN_URL . 'assets/js/settings.js', array(), SR_VERSION, true );
+
+		wp_localize_script(
+			'sr-settings',
+			'SR_ADMIN',
+			array(
+				'ajaxUrl'        => admin_url( 'admin-ajax.php' ),
+				'nonce'           => wp_create_nonce( 'sr_admin_ajax' ),
+				'confirmDelete'   => __( 'Delete this shooting session and all of its recorded results? This cannot be undone.', 'shooting-results' ),
+				'genericError'    => __( 'Something went wrong. Please try again.', 'shooting-results' ),
+			)
+		);
 	}
 
 	public static function render() {
@@ -72,6 +83,57 @@ class SR_Admin_Page {
 				</p>
 				<p><?php esc_html_e( 'No WordPress account is needed to record results — just the page password. That also means recording can continue on a different device mid-competition: whoever takes over just opens the same page, enters the password, and picks the open session from the list.', 'shooting-results' ); ?></p>
 			</div>
+
+			<?php self::render_sessions_section(); ?>
+		</div>
+		<?php
+	}
+
+	private static function render_sessions_section() {
+		global $wpdb;
+		$table    = SR_DB::table( 'sessions' );
+		$sessions = $wpdb->get_results( "SELECT * FROM {$table} ORDER BY created_at DESC LIMIT 200" );
+		?>
+		<div class="card sr-settings-card">
+			<h2><?php esc_html_e( 'Sessions', 'shooting-results' ); ?></h2>
+			<?php if ( ! $sessions ) : ?>
+				<p><?php esc_html_e( 'No sessions recorded yet.', 'shooting-results' ); ?></p>
+			<?php else : ?>
+				<table class="widefat striped sr-sessions-table">
+					<thead>
+						<tr>
+							<th><?php esc_html_e( 'Date', 'shooting-results' ); ?></th>
+							<th><?php esc_html_e( 'Discipline', 'shooting-results' ); ?></th>
+							<th><?php esc_html_e( 'Status', 'shooting-results' ); ?></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<?php foreach ( $sessions as $session ) : ?>
+							<tr data-session-row="<?php echo esc_attr( $session->id ); ?>">
+								<td><?php echo esc_html( date_i18n( 'd.m.Y H:i', strtotime( $session->created_at ) ) ); ?></td>
+								<td>
+									<?php
+									if ( 'shotgun' === $session->discipline ) {
+										esc_html_e( 'Shotgun', 'shooting-results' );
+									} else {
+										echo esc_html( $session->shots_per_round ) . ' ' . esc_html__( 'shots per round', 'shooting-results' );
+									}
+									?>
+								</td>
+								<td>
+									<?php echo 'sent' === $session->status ? esc_html__( 'Sent', 'shooting-results' ) : esc_html__( 'Draft', 'shooting-results' ); ?>
+								</td>
+								<td>
+									<button type="button" class="button button-link-delete sr-delete-session" data-session-id="<?php echo esc_attr( $session->id ); ?>">
+										<?php esc_html_e( 'Delete', 'shooting-results' ); ?>
+									</button>
+								</td>
+							</tr>
+						<?php endforeach; ?>
+					</tbody>
+				</table>
+			<?php endif; ?>
 		</div>
 		<?php
 	}

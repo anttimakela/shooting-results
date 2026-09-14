@@ -125,6 +125,12 @@ class SR_Shortcode {
 			'clear'                 => __( 'Clear', 'shooting-results' ),
 			'genericError'          => __( 'Something went wrong. Please try again.', 'shooting-results' ),
 			'continueSession'       => __( 'Continue open session', 'shooting-results' ),
+			'rifle'                 => __( 'Rifle', 'shooting-results' ),
+			'shotgun'               => __( 'Shotgun', 'shooting-results' ),
+			'chooseDiscipline'      => __( 'Choose the discipline.', 'shooting-results' ),
+			'result'                => __( 'Result', 'shooting-results' ),
+			'saveResult'            => __( 'Save', 'shooting-results' ),
+			'confirmRemoveShooterRound' => __( 'Remove this shooter\'s entry from this round? Other rounds are not affected.', 'shooting-results' ),
 		);
 	}
 }

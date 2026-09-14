@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 class SR_DB {
 
 	const DB_VERSION_OPTION = 'sr_db_version';
-	const DB_VERSION        = '1.0.0';
+	const DB_VERSION        = '1.2.0';
 
 	public static function maybe_upgrade() {
 		if ( get_option( self::DB_VERSION_OPTION ) !== self::DB_VERSION ) {
@@ -35,6 +35,7 @@ CREATE TABLE {$prefix}sessions (
 	created_by BIGINT UNSIGNED NOT NULL,
 	created_at DATETIME NOT NULL,
 	shots_per_round SMALLINT UNSIGNED NOT NULL,
+	discipline VARCHAR(20) NOT NULL DEFAULT 'rifle',
 	status VARCHAR(20) NOT NULL DEFAULT 'draft',
 	report_email VARCHAR(200) DEFAULT NULL,
 	report_sent_at DATETIME DEFAULT NULL,

@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.6
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ with a big touch-friendly numeric keypad — and none of the fragility of
 * **Add it to any page** with the `[shooting_results]` shortcode — no separate wp-admin screen to find.
 * **No WordPress account needed** — password-protect that page (a built-in WordPress feature) and share the password with whoever is recording results.
 * **Hand off mid-competition** — anyone with the password can open the same page on another device, pick the open session from the list, and keep recording where the last person left off.
-* **Start a session** — pick how many shots per round (5/10/15/20/25 or a custom number).
+* **Rifle or shotgun** — rifle records a 0–10 score per shot (10 or a custom shots-per-round); shotgun records one final result per round instead.
 * **Add shooters** as they arrive — one tap adds a row.
 * **Enter scores** with a large 0–10 keypad, sized for gloved hands and older users.
 * **Running totals** update live per shooter.
@@ -77,6 +77,13 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.2.0 =
+* Added shotgun as a discipline alongside rifle: choose it when starting a session, and record one final result per round instead of a per-shot breakdown. Rifle's shots-per-round presets are now just 10 and "Other".
+* A shooter can now be removed from any round being viewed, not just the latest one — fixes a mistake on an earlier round without affecting rounds after it.
+* Dates in the session list now show as `pp.kk.vvvv` (e.g. 01.09.2026) instead of the raw database timestamp.
+* More spacing between "Start new round" / "Send report" / "Add shooter" — they were close enough on a touch screen to risk hitting the wrong one.
+* The Settings page now lists every recorded session with a delete button, for removing one you no longer need. This is wp-admin-only (not reachable from the password-gated front-end page).
 
 = 1.1.6 =
 * Opening a stale `?session=` link (already handled gracefully by falling back to the session list) no longer logs a "404" network error in the browser console — the server response for that case no longer uses an HTTP error status, since it was never actually a failure the user needed to see.

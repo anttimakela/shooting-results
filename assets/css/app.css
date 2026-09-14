@@ -72,6 +72,22 @@
 	margin-top: 10px;
 }
 
+/* Extra breathing room between the add-shooter / start-new-round / send-
+   report actions — on a touch screen these being close together risked a
+   mistap on an action that isn't easily undone (starting a round, sending
+   a report). .sr-finish-section also visually separates "send report"
+   from the round-editing actions above it with a divider, since it's a
+   different kind of action (finishing up, not recording). */
+.sr-row.sr-action-group {
+	margin-top: 28px;
+}
+
+.sr-finish-section {
+	margin-top: 32px;
+	padding-top: 20px;
+	border-top: 2px solid var(--sr-border);
+}
+
 .sr-btn {
 	display: inline-flex;
 	align-items: center;
@@ -126,6 +142,24 @@
 .sr-preset-btn.is-active {
 	background: var(--sr-green);
 	color: #fff;
+}
+
+.sr-discipline-btn {
+	min-width: 110px;
+	font-size: 16px;
+	padding: 14px 18px;
+}
+
+.sr-discipline-btn.is-active {
+	background: var(--sr-green);
+	color: #fff;
+}
+
+.sr-shotgun-input {
+	width: 100px;
+	text-align: center;
+	font-size: 20px;
+	font-weight: 700;
 }
 
 .sr-input {

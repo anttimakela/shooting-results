@@ -51,8 +51,12 @@ class SR_Mailer {
 			);
 
 			$header = array( __( 'Shooter', 'shooting-results' ) );
-			for ( $i = 1; $i <= $session->shots_per_round; $i++ ) {
-				$header[] = 'S' . $i;
+			if ( 'shotgun' === $session->discipline ) {
+				$header[] = __( 'Result', 'shooting-results' );
+			} else {
+				for ( $i = 1; $i <= $session->shots_per_round; $i++ ) {
+					$header[] = 'S' . $i;
+				}
 			}
 			$header[] = __( 'Total', 'shooting-results' );
 
