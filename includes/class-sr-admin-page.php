@@ -16,6 +16,33 @@ class SR_Admin_Page {
 
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'register_menu' ) );
+		add_action( 'admin_post_sr_download_report', array( __CLASS__, 'download_report' ) );
+	}
+
+	/**
+	 * Streams a session's .xlsx report as a direct download. Lives on
+	 * admin-post.php (not admin-ajax.php) since it's a plain navigation
+	 * that returns a file, not a JSON response for JS to handle.
+	 */
+	public static function download_report() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'You do not have permission to do this.', 'shooting-results' ) );
+		}
+
+		$session_id = isset( $_GET['session_id'] ) ? absint( $_GET['session_id'] ) : 0;
+		check_admin_referer( 'sr_download_report_' . $session_id );
+
+		$report = SR_Mailer::build_report( $session_id );
+		if ( is_wp_error( $report ) ) {
+			wp_die( esc_html( $report->get_error_message() ) );
+		}
+
+		nocache_headers();
+		header( 'Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' );
+		header( 'Content-Disposition: attachment; filename="' . $report['filename'] . '"' );
+		header( 'Content-Length: ' . strlen( $report['bytes'] ) );
+		echo $report['bytes']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- binary .xlsx bytes, not HTML.
+		exit;
 	}
 
 	public static function register_menu() {
@@ -125,6 +152,9 @@ class SR_Admin_Page {
 									<?php echo 'sent' === $session->status ? esc_html__( 'Sent', 'shooting-results' ) : esc_html__( 'Draft', 'shooting-results' ); ?>
 								</td>
 								<td>
+									<a class="button" href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=sr_download_report&session_id=' . $session->id ), 'sr_download_report_' . $session->id ) ); ?>">
+										<?php esc_html_e( 'Download report', 'shooting-results' ); ?>
+									</a>
 									<button type="button" class="button button-link-delete sr-delete-session" data-session-id="<?php echo esc_attr( $session->id ); ?>">
 										<?php esc_html_e( 'Delete', 'shooting-results' ); ?>
 									</button>

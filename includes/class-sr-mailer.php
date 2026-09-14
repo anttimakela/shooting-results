@@ -12,9 +12,12 @@ defined( 'ABSPATH' ) || exit;
 class SR_Mailer {
 
 	/**
-	 * @return true|WP_Error
+	 * Builds the .xlsx workbook for a session — shared by send_report()
+	 * (emails it) and SR_Admin_Page's direct download link.
+	 *
+	 * @return array{bytes: string, filename: string}|WP_Error
 	 */
-	public static function send_report( $session_id, $email ) {
+	public static function build_report( $session_id ) {
 		global $wpdb;
 
 		$sessions_table = SR_DB::table( 'sessions' );
@@ -99,10 +102,25 @@ class SR_Mailer {
 		}
 		$writer->add_sheet( __( 'Summary', 'shooting-results' ), $summary_rows );
 
-		$xlsx_bytes = $writer->build();
-		$file_name  = 'results_' . gmdate( 'Y-m-d', strtotime( $session->created_at ) ) . '_' . $session_id . '.xlsx';
-		$xlsx_path  = trailingslashit( get_temp_dir() ) . $file_name;
-		file_put_contents( $xlsx_path, $xlsx_bytes );
+		return array(
+			'bytes'    => $writer->build(),
+			'filename' => 'results_' . gmdate( 'Y-m-d', strtotime( $session->created_at ) ) . '_' . $session_id . '.xlsx',
+		);
+	}
+
+	/**
+	 * @return true|WP_Error
+	 */
+	public static function send_report( $session_id, $email ) {
+		global $wpdb;
+
+		$report = self::build_report( $session_id );
+		if ( is_wp_error( $report ) ) {
+			return $report;
+		}
+
+		$xlsx_path = trailingslashit( get_temp_dir() ) . $report['filename'];
+		file_put_contents( $xlsx_path, $report['bytes'] ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents -- a short-lived temp attachment, deleted right after wp_mail() below; WP_Filesystem is overkill here.
 
 		/* translators: %s: date */
 		$subject = sprintf( __( 'Shooting results – %s', 'shooting-results' ), date_i18n( get_option( 'date_format' ) ) );
@@ -117,7 +135,7 @@ class SR_Mailer {
 		}
 
 		$wpdb->update(
-			$sessions_table,
+			SR_DB::table( 'sessions' ),
 			array(
 				'status'         => 'sent',
 				'report_email'   => $email,

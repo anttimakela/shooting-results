@@ -142,6 +142,13 @@ its own `sr_admin_ajax` nonce, no `_nopriv_` hook), reachable only from the
 Settings page's session list, since deleting a whole session is
 destructive and shouldn't be reachable from the password-gated front end.
 
+The Settings page's "Download report" link is not an AJAX action at all —
+it's `admin_post_sr_download_report` (`SR_Admin_Page::download_report()`),
+since a file download is a plain navigation, not something JS needs a JSON
+response for. Same `manage_options` + per-session nonce pattern as the
+delete action. Both it and `send_report`/`sr_send_report` build the
+workbook through the same `SR_Mailer::build_report()`.
+
 ## Translations
 
 Strings are wrapped in standard `__()`/`_e()` calls in PHP; the JS UI text

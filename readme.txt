@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.2.1 =
+* The Settings page's session list now has a "Download report" button next to each session, for getting the .xlsx directly without emailing it.
 
 = 1.2.0 =
 * Added shotgun as a discipline alongside rifle: choose it when starting a session, and record one final result per round instead of a per-shot breakdown. Rifle's shots-per-round presets are now just 10 and "Other".

@@ -33,3 +33,7 @@
 .sr-sessions-table td {
 	padding: 8px 10px;
 }
+
+.sr-sessions-table td .button + .button {
+	margin-left: 8px;
+}
