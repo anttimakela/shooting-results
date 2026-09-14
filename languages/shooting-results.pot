@@ -2,14 +2,14 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Shooting Results 1.2.1\n"
+"Project-Id-Version: Shooting Results 1.2.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/shooting-results\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-14T12:00:40+00:00\n"
+"POT-Creation-Date: 2026-09-14T12:54:37+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: shooting-results\n"
@@ -48,7 +48,7 @@ msgid "Delete this shooting session and all of its recorded results? This cannot
 msgstr ""
 
 #: includes/class-sr-admin-page.php:77
-#: includes/class-sr-shortcode.php:126
+#: includes/class-sr-shortcode.php:127
 msgid "Something went wrong. Please try again."
 msgstr ""
 
@@ -92,7 +92,7 @@ msgstr ""
 
 #: includes/class-sr-admin-page.php:125
 #: includes/class-sr-shortcode.php:98
-#: includes/class-sr-shortcode.php:108
+#: includes/class-sr-shortcode.php:109
 msgid "Sessions"
 msgstr ""
 
@@ -118,17 +118,17 @@ msgid "Shotgun"
 msgstr ""
 
 #: includes/class-sr-admin-page.php:147
-#: includes/class-sr-shortcode.php:102
+#: includes/class-sr-shortcode.php:103
 msgid "shots per round"
 msgstr ""
 
 #: includes/class-sr-admin-page.php:152
-#: includes/class-sr-shortcode.php:101
+#: includes/class-sr-shortcode.php:102
 msgid "Sent"
 msgstr ""
 
 #: includes/class-sr-admin-page.php:152
-#: includes/class-sr-shortcode.php:100
+#: includes/class-sr-shortcode.php:101
 msgid "Draft"
 msgstr ""
 
@@ -185,7 +185,7 @@ msgstr ""
 
 #: includes/class-sr-mailer.php:56
 #: includes/class-sr-mailer.php:94
-#: includes/class-sr-shortcode.php:112
+#: includes/class-sr-shortcode.php:113
 msgid "Shooter"
 msgstr ""
 
@@ -196,7 +196,7 @@ msgstr ""
 
 #: includes/class-sr-mailer.php:64
 #: includes/class-sr-mailer.php:94
-#: includes/class-sr-shortcode.php:113
+#: includes/class-sr-shortcode.php:114
 msgid "Total"
 msgstr ""
 
@@ -233,91 +233,91 @@ msgid "Record Results"
 msgstr ""
 
 #: includes/class-sr-shortcode.php:99
+msgid "Click a session to edit it."
+msgstr ""
+
+#: includes/class-sr-shortcode.php:100
 msgid "No sessions yet. Start with \"Record Results\"."
 msgstr ""
 
-#: includes/class-sr-shortcode.php:103
+#: includes/class-sr-shortcode.php:104
 msgid "New Shooting Session"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:104
+#: includes/class-sr-shortcode.php:105
 msgid "Choose the number of shots per round."
 msgstr ""
 
-#: includes/class-sr-shortcode.php:105
+#: includes/class-sr-shortcode.php:106
 msgid "Other"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:106
+#: includes/class-sr-shortcode.php:107
 msgid "Cancel"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:107
+#: includes/class-sr-shortcode.php:108
 msgid "Start"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:109
+#: includes/class-sr-shortcode.php:110
 msgid "Saved"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:110
+#: includes/class-sr-shortcode.php:111
 msgid "Saving…"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:111
+#: includes/class-sr-shortcode.php:112
 msgid "Round"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:114
+#: includes/class-sr-shortcode.php:115
 msgid "Remove shooter"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:115
+#: includes/class-sr-shortcode.php:116
 msgid "Remove this shooter from upcoming rounds? Past rounds are kept in the report."
 msgstr ""
 
-#: includes/class-sr-shortcode.php:116
+#: includes/class-sr-shortcode.php:117
 msgid "Shooter name"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:117
+#: includes/class-sr-shortcode.php:118
 msgid "Add Shooter"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:118
+#: includes/class-sr-shortcode.php:119
 msgid "Start New Round"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:119
+#: includes/class-sr-shortcode.php:120
 msgid "Send Report"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:120
+#: includes/class-sr-shortcode.php:121
 msgid "Email address"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:121
+#: includes/class-sr-shortcode.php:122
 msgid "Send"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:122
+#: includes/class-sr-shortcode.php:123
 msgid "Report sent."
 msgstr ""
 
-#: includes/class-sr-shortcode.php:123
+#: includes/class-sr-shortcode.php:124
 msgid "Last sent"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:124
+#: includes/class-sr-shortcode.php:125
 msgid "Shot"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:125
+#: includes/class-sr-shortcode.php:126
 msgid "Clear"
-msgstr ""
-
-#: includes/class-sr-shortcode.php:127
-msgid "Continue open session"
 msgstr ""
 
 #: includes/class-sr-shortcode.php:128

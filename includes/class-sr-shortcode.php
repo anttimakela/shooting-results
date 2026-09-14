@@ -96,6 +96,7 @@ class SR_Shortcode {
 		return array(
 			'recordResults'        => __( 'Record Results', 'shooting-results' ),
 			'sessions'              => __( 'Sessions', 'shooting-results' ),
+			'chooseSessionHint'     => __( 'Click a session to edit it.', 'shooting-results' ),
 			'noSessions'            => __( 'No sessions yet. Start with "Record Results".', 'shooting-results' ),
 			'draft'                 => __( 'Draft', 'shooting-results' ),
 			'sent'                  => __( 'Sent', 'shooting-results' ),
@@ -124,7 +125,6 @@ class SR_Shortcode {
 			'shot'                  => __( 'Shot', 'shooting-results' ),
 			'clear'                 => __( 'Clear', 'shooting-results' ),
 			'genericError'          => __( 'Something went wrong. Please try again.', 'shooting-results' ),
-			'continueSession'       => __( 'Continue open session', 'shooting-results' ),
 			'rifle'                 => __( 'Rifle', 'shooting-results' ),
 			'shotgun'               => __( 'Shotgun', 'shooting-results' ),
 			'chooseDiscipline'      => __( 'Choose the discipline.', 'shooting-results' ),

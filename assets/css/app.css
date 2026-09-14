@@ -53,6 +53,12 @@
 	font-weight: 600;
 }
 
+.sr-hint {
+	color: var(--sr-text-muted);
+	font-size: 13px;
+	margin: 4px 0 12px;
+}
+
 .sr-card {
 	background: #fff;
 	border: 1px solid var(--sr-border);

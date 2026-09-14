@@ -109,22 +109,16 @@
 
 	function renderList( sessions ) {
 		setUrlSession( null );
-		var draftSession = sessions.find( function ( s ) {
-			return 'draft' === s.status;
-		} );
 
 		var html = '';
-		if ( draftSession ) {
-			html += '<div class="sr-row">';
-			html += '<button class="sr-btn sr-btn-primary sr-btn-lg" id="sr-continue-session" data-session-id="' + draftSession.id + '">' +
-				t( 'continueSession' ) + ' &rarr;</button>';
-			html += '</div>';
-		}
 		html += '<div class="sr-row">';
 		html += '<button class="sr-btn sr-btn-accent sr-btn-lg" id="sr-new-session">' + t( 'recordResults' ) + '</button>';
 		html += '</div>';
 		html += '<div class="sr-card">';
 		html += '<h2>' + t( 'sessions' ) + '</h2>';
+		if ( sessions.length ) {
+			html += '<p class="sr-hint">' + t( 'chooseSessionHint' ) + '</p>';
+		}
 		if ( ! sessions.length ) {
 			html += '<p>' + t( 'noSessions' ) + '</p>';
 		} else {
@@ -145,11 +139,6 @@
 		root.innerHTML = html;
 
 		document.getElementById( 'sr-new-session' ).addEventListener( 'click', showNewSessionPrompt );
-		if ( draftSession ) {
-			document.getElementById( 'sr-continue-session' ).addEventListener( 'click', function () {
-				openSession( draftSession.id );
-			} );
-		}
 		root.querySelectorAll( '.sr-session-list-item' ).forEach( function ( el ) {
 			el.addEventListener( 'click', function () {
 				openSession( parseInt( el.getAttribute( 'data-session-id' ), 10 ) );
