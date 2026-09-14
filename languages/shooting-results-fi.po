@@ -1,0 +1,218 @@
+# Finnish translation for Shooting Results.
+msgid ""
+msgstr ""
+"Project-Id-Version: Shooting Results 1.0.0\n"
+"Report-Msgid-Bugs-To: https://github.com/anttimakela/shooting-results\n"
+"PO-Revision-Date: 2026-09-14 12:00+0200\n"
+"Last-Translator: Antti Mäkelä\n"
+"Language-Team: Finnish\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: shooting-results\n"
+
+#. Description of the plugin
+#: shooting-results.php
+msgid "Fast, big-button competition results recording for shooting ranges — every score autosaves immediately, so a page refresh never loses data. Exports an Excel report by email."
+msgstr "Nopea, isoilla painikkeilla toimiva kilpailutulosten kirjaus ampumaradoille — jokainen tulos tallentuu heti automaattisesti, jolloin sivun päivitys ei koskaan hävitä tietoja. Vie Excel-raportin sähköpostilla."
+
+#: includes/class-sr-admin-page.php:57
+msgid "Record Results"
+msgstr "Kirjaa tulokset"
+
+#: includes/class-sr-admin-page.php:58
+#: includes/class-sr-admin-page.php:68
+msgid "Sessions"
+msgstr "Ammunnat"
+
+#: includes/class-sr-admin-page.php:59
+msgid "No sessions yet. Start with \"Record Results\"."
+msgstr "Ei vielä ammuntoja. Aloita painamalla \"Kirjaa tulokset\"."
+
+#: includes/class-sr-admin-page.php:60
+msgid "Draft"
+msgstr "Luonnos"
+
+#: includes/class-sr-admin-page.php:61
+msgid "Sent"
+msgstr "Lähetetty"
+
+#: includes/class-sr-admin-page.php:62
+msgid "shots per round"
+msgstr "laukausta / kierros"
+
+#: includes/class-sr-admin-page.php:63
+msgid "New Shooting Session"
+msgstr "Uusi ammunta"
+
+#: includes/class-sr-admin-page.php:64
+msgid "Choose the number of shots per round."
+msgstr "Valitse laukausten määrä kierrosta kohden."
+
+#: includes/class-sr-admin-page.php:65
+msgid "Other"
+msgstr "Muu"
+
+#: includes/class-sr-admin-page.php:66
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: includes/class-sr-admin-page.php:67
+msgid "Start"
+msgstr "Aloita"
+
+#: includes/class-sr-admin-page.php:69
+msgid "Saved"
+msgstr "Tallennettu"
+
+#: includes/class-sr-admin-page.php:70
+msgid "Saving…"
+msgstr "Tallennetaan…"
+
+#: includes/class-sr-admin-page.php:71
+msgid "Round"
+msgstr "Kierros"
+
+#: includes/class-sr-admin-page.php:72
+#: includes/class-sr-mailer.php:53
+#: includes/class-sr-mailer.php:87
+msgid "Shooter"
+msgstr "Ampuja"
+
+#: includes/class-sr-admin-page.php:73
+#: includes/class-sr-mailer.php:57
+#: includes/class-sr-mailer.php:87
+msgid "Total"
+msgstr "Yhteensä"
+
+#: includes/class-sr-admin-page.php:74
+msgid "Remove shooter"
+msgstr "Poista ampuja"
+
+#: includes/class-sr-admin-page.php:75
+msgid "Remove this shooter from upcoming rounds? Past rounds are kept in the report."
+msgstr "Poistetaanko ampuja tulevilta kierroksilta? Aiemmat kierrokset säilyvät raportissa."
+
+#: includes/class-sr-admin-page.php:76
+msgid "Shooter name"
+msgstr "Ampujan nimi"
+
+#: includes/class-sr-admin-page.php:77
+msgid "Add Shooter"
+msgstr "Lisää ampuja"
+
+#: includes/class-sr-admin-page.php:78
+msgid "Start New Round"
+msgstr "Aloita uusi kierros"
+
+#: includes/class-sr-admin-page.php:79
+msgid "Send Report"
+msgstr "Lähetä raportti"
+
+#: includes/class-sr-admin-page.php:80
+msgid "Email address"
+msgstr "Sähköpostiosoite"
+
+#: includes/class-sr-admin-page.php:81
+msgid "Send"
+msgstr "Lähetä"
+
+#: includes/class-sr-admin-page.php:82
+msgid "Report sent."
+msgstr "Raportti lähetetty."
+
+#: includes/class-sr-admin-page.php:83
+msgid "Last sent"
+msgstr "Lähetetty viimeksi"
+
+#: includes/class-sr-admin-page.php:84
+msgid "Shot"
+msgstr "Laukaus"
+
+#: includes/class-sr-admin-page.php:85
+msgid "Clear"
+msgstr "Tyhjennä"
+
+#: includes/class-sr-admin-page.php:86
+msgid "Something went wrong. Please try again."
+msgstr "Jokin meni pieleen. Yritä uudelleen."
+
+#: includes/class-sr-admin-page.php:92
+msgid "You do not have permission to access this page."
+msgstr "Sinulla ei ole oikeutta käyttää tätä sivua."
+
+#: includes/class-sr-ajax.php:34
+msgid "You do not have permission to do this."
+msgstr "Sinulla ei ole oikeutta tähän toimintoon."
+
+#: includes/class-sr-ajax.php:74
+msgid "Invalid number of shots per round."
+msgstr "Virheellinen laukausten määrä kierrosta kohden."
+
+#: includes/class-sr-ajax.php:114
+msgid "Enter a name."
+msgstr "Syötä nimi."
+
+#: includes/class-sr-ajax.php:117
+#: includes/class-sr-ajax.php:163
+msgid "Invalid session."
+msgstr "Virheellinen ammunta."
+
+#: includes/class-sr-ajax.php:186
+msgid "Entry not found."
+msgstr "Tulosriviä ei löytynyt."
+
+#: includes/class-sr-ajax.php:191
+msgid "Invalid shot index."
+msgstr "Virheellinen laukausnumero."
+
+#: includes/class-sr-ajax.php:199
+msgid "A shot score must be between 0 and 10."
+msgstr "Laukaustuloksen on oltava välillä 0–10."
+
+#: includes/class-sr-ajax.php:234
+msgid "Session not found."
+msgstr "Ammuntaa ei löytynyt."
+
+#: includes/class-sr-ajax.php:275
+msgid "Enter a valid email address."
+msgstr "Syötä kelvollinen sähköpostiosoite."
+
+#: includes/class-sr-ajax.php:302
+#: includes/class-sr-mailer.php:27
+msgid "Results session not found."
+msgstr "Tulosammuntaa ei löytynyt."
+
+#: includes/class-sr-capabilities.php:25
+msgid "Range Staff"
+msgstr "Radan valvoja"
+
+#. translators: %d: round number
+#: includes/class-sr-mailer.php:83
+#, php-format
+msgid "Round %d"
+msgstr "Kierros %d"
+
+#: includes/class-sr-mailer.php:87
+msgid "Rounds"
+msgstr "Kierroksia"
+
+#: includes/class-sr-mailer.php:96
+msgid "Summary"
+msgstr "Yhteenveto"
+
+#. translators: %s: date
+#: includes/class-sr-mailer.php:104
+#, php-format
+msgid "Shooting results – %s"
+msgstr "Ammuntatulokset – %s"
+
+#: includes/class-sr-mailer.php:105
+msgid "The shooting results are attached as an Excel file."
+msgstr "Liitteenä ammunnan tulokset Excel-tiedostona."
+
+#: includes/class-sr-mailer.php:112
+msgid "Sending the report email failed. Check the site's SMTP/mail configuration."
+msgstr "Raporttisähköpostin lähetys epäonnistui. Tarkista sivuston SMTP/sähköpostiasetukset."

@@ -1,0 +1,299 @@
+/* Shooting Results — admin UI. Light WP-admin-native background with the
+   "Hunting Finland" accent palette (hunter green primary, blaze-orange
+   accent) applied to actions, not the whole chrome. */
+
+:root {
+	--sr-green: #3f7d33;
+	--sr-green-dark: #254d1e;
+	--sr-green-bg: #eaf3e7;
+	--sr-orange: #ff6a00;
+	--sr-orange-bg: #fff1e6;
+	--sr-danger: #c0392b;
+	--sr-border: #dcdcdc;
+	--sr-text-muted: #6b7280;
+}
+
+.sr-wrap {
+	max-width: 1100px;
+}
+
+.sr-hidden {
+	display: none !important;
+}
+
+.sr-card {
+	background: #fff;
+	border: 1px solid var(--sr-border);
+	border-radius: 8px;
+	padding: 20px;
+	margin-top: 16px;
+}
+
+.sr-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.sr-row + .sr-row {
+	margin-top: 10px;
+}
+
+.sr-btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	border: 1px solid transparent;
+	border-radius: 6px;
+	padding: 10px 18px;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	background: #f3f3f3;
+	color: #1d2327;
+}
+
+.sr-btn:hover {
+	filter: brightness(0.97);
+}
+
+.sr-btn-primary {
+	background: var(--sr-green);
+	color: #fff;
+}
+
+.sr-btn-accent {
+	background: var(--sr-orange);
+	color: #fff;
+}
+
+.sr-btn-danger {
+	background: transparent;
+	color: var(--sr-danger);
+	border-color: var(--sr-danger);
+	padding: 6px 10px;
+}
+
+.sr-btn-lg {
+	padding: 16px 24px;
+	font-size: 18px;
+}
+
+.sr-btn[disabled] {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.sr-preset-btn {
+	min-width: 64px;
+	font-size: 20px;
+}
+
+.sr-preset-btn.is-active {
+	background: var(--sr-green);
+	color: #fff;
+}
+
+.sr-input {
+	border: 1px solid var(--sr-border);
+	border-radius: 6px;
+	padding: 10px 12px;
+	font-size: 15px;
+	min-height: 40px;
+}
+
+.sr-session-list-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 12px 4px;
+	border-bottom: 1px solid var(--sr-border);
+	cursor: pointer;
+}
+
+.sr-session-list-item:hover {
+	background: #fafafa;
+}
+
+.sr-badge {
+	display: inline-block;
+	padding: 3px 10px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 700;
+}
+
+.sr-badge-draft {
+	background: var(--sr-orange-bg);
+	color: var(--sr-orange);
+}
+
+.sr-badge-sent {
+	background: var(--sr-green-bg);
+	color: var(--sr-green-dark);
+}
+
+.sr-round-tabs {
+	display: flex;
+	gap: 6px;
+	flex-wrap: wrap;
+	margin-bottom: 14px;
+}
+
+.sr-round-tab {
+	padding: 8px 16px;
+	border-radius: 999px;
+	background: #f3f3f3;
+	font-weight: 600;
+	cursor: pointer;
+	border: none;
+}
+
+.sr-round-tab.is-active {
+	background: var(--sr-green);
+	color: #fff;
+}
+
+.sr-table-scroll {
+	overflow-x: auto;
+	border: 1px solid var(--sr-border);
+	border-radius: 8px;
+}
+
+.sr-table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.sr-table th,
+.sr-table td {
+	border-bottom: 1px solid var(--sr-border);
+	padding: 0;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.sr-table th {
+	background: #f7f7f7;
+	font-size: 13px;
+	padding: 10px 8px;
+}
+
+.sr-table td.sr-name-cell {
+	text-align: left;
+	padding: 0 10px;
+	font-weight: 600;
+	position: sticky;
+	left: 0;
+	background: #fff;
+	min-width: 160px;
+}
+
+.sr-shot-cell {
+	width: 52px;
+	height: 52px;
+	font-size: 18px;
+	font-weight: 700;
+	cursor: pointer;
+	background: none;
+	border: none;
+	color: #1d2327;
+}
+
+.sr-shot-cell:hover {
+	background: var(--sr-green-bg);
+}
+
+.sr-total-cell {
+	font-weight: 800;
+	color: var(--sr-green-dark);
+	background: #f7fbf6;
+	min-width: 64px;
+}
+
+.sr-remove-shooter {
+	background: none;
+	border: none;
+	color: var(--sr-danger);
+	cursor: pointer;
+	font-size: 16px;
+	padding: 4px;
+	vertical-align: middle;
+	margin-left: 6px;
+}
+
+.sr-autosave-indicator {
+	font-size: 13px;
+	color: var(--sr-text-muted);
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+
+.sr-autosave-indicator.is-saved {
+	color: var(--sr-green-dark);
+}
+
+/* Keypad modal */
+.sr-modal-backdrop {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.55);
+	display: flex;
+	align-items: flex-end;
+	justify-content: center;
+	z-index: 100000;
+}
+
+.sr-modal {
+	background: #fff;
+	border-radius: 16px 16px 0 0;
+	padding: 24px;
+	width: 100%;
+	max-width: 420px;
+	box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.25);
+}
+
+.sr-modal-title {
+	font-size: 18px;
+	font-weight: 800;
+	text-align: center;
+	margin: 0 0 2px;
+}
+
+.sr-modal-subtitle {
+	font-size: 13px;
+	color: var(--sr-text-muted);
+	text-align: center;
+	margin: 0 0 16px;
+}
+
+.sr-keypad-grid {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 10px;
+}
+
+.sr-key {
+	height: 64px;
+	border-radius: 12px;
+	border: 1px solid var(--sr-border);
+	background: #f7f7f7;
+	font-size: 24px;
+	font-weight: 800;
+	cursor: pointer;
+}
+
+.sr-key.is-active {
+	background: var(--sr-green);
+	color: #fff;
+	border-color: var(--sr-green);
+}
+
+.sr-key-clear {
+	grid-column: span 2;
+	color: var(--sr-danger);
+	font-size: 14px;
+}
