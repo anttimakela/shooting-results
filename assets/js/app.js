@@ -273,6 +273,14 @@
 	}
 
 	function renderSession() {
+		// Every mutation (a shot, adding a shooter, …) re-renders this whole
+		// view, which would otherwise reset the results table's horizontal
+		// scroll back to the left each time — annoying when the shooter
+		// you're recording is scrolled off to the right. Restore it after
+		// the new markup is in.
+		var existingScroll = root.querySelector( '.sr-table-scroll' );
+		var scrollLeft = existingScroll ? existingScroll.scrollLeft : 0;
+
 		var session = state.session;
 		var round = state.rounds.find( function ( r ) {
 			return r.round_id === currentRoundId;
@@ -359,6 +367,12 @@
 		html += '</div>';
 
 		root.innerHTML = html;
+
+		var newScroll = root.querySelector( '.sr-table-scroll' );
+		if ( newScroll ) {
+			newScroll.scrollLeft = scrollLeft;
+		}
+
 		bindSessionEvents( isLatestRound );
 	}
 
