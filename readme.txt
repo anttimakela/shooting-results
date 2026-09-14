@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.8
+Stable tag: 1.2.9
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.2.9 =
+* Removed the results page's remaining base 12px padding — .sr-frontend has no padding of its own at any width now.
 
 = 1.2.8 =
 * The results page no longer caps its width at 640px or adds side padding on wider screens — it now fills the available width at 100%.
