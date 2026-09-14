@@ -81,7 +81,14 @@ class SR_Ajax {
 		$session_id = isset( $_POST['session_id'] ) ? absint( $_POST['session_id'] ) : 0;
 		$state       = self::build_session_state( $session_id );
 		if ( is_wp_error( $state ) ) {
-			wp_send_json_error( array( 'message' => $state->get_error_message() ), 404 );
+			// No status code (stays HTTP 200): app.js's openSession() treats
+			// a missing session as routine — e.g. a stale ?session= link —
+			// and silently falls back to the session list. A non-2xx status
+			// here would make the browser log a "failed to load resource"
+			// network error for something the UI already recovers from
+			// cleanly, which is misleading during troubleshooting.
+			wp_send_json_error( array( 'message' => $state->get_error_message() ) );
+			return;
 		}
 		wp_send_json_success( $state );
 	}

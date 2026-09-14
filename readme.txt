@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.5
+Stable tag: 1.1.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.1.6 =
+* Opening a stale `?session=` link (already handled gracefully by falling back to the session list) no longer logs a "404" network error in the browser console — the server response for that case no longer uses an HTTP error status, since it was never actually a failure the user needed to see.
 
 = 1.1.5 =
 * Fixed the actual cause of "You do not have permission to do this." on page builders (confirmed on Breakdance): the AJAX permission check looked for the shortcode inside the page's post_content field, but builders like Breakdance store their content elsewhere and only run the shortcode through WordPress's normal shortcode processing at render time. The check now trusts a marker set the first time the shortcode actually renders on a post, regardless of how that post's content is structured. **After updating, open the results page once (and purge any page cache for it) so the marker gets set before recording results.**
