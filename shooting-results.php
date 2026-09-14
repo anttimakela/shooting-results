@@ -28,6 +28,15 @@ require_once SR_PLUGIN_DIR . 'includes/class-sr-xlsx-writer.php';
 require_once SR_PLUGIN_DIR . 'includes/class-sr-mailer.php';
 require_once SR_PLUGIN_DIR . 'includes/class-sr-ajax.php';
 require_once SR_PLUGIN_DIR . 'includes/class-sr-admin-page.php';
+require_once SR_PLUGIN_DIR . 'includes/plugin-update-checker/plugin-update-checker.php';
+
+use YahnisElsts\PluginUpdateChecker\v5\PucFactory;
+
+PucFactory::buildUpdateChecker(
+	'https://github.com/anttimakela/shooting-results/',
+	SR_PLUGIN_FILE,
+	'shooting-results'
+);
 
 register_activation_hook(
 	__FILE__,

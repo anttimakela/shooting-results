@@ -137,3 +137,24 @@ wp plugin activate shooting-results
 ```
 
 Then visit **Shooting Results** in wp-admin.
+
+## Releasing updates
+
+The plugin bundles [Plugin Update Checker](https://github.com/YahnisElsts/plugin-update-checker)
+(`includes/plugin-update-checker/`), pointed at this GitHub repo, so sites
+with the plugin installed see new versions show up under **Dashboard →
+Updates** / **Plugins**, same as a wordpress.org-hosted plugin — no separate
+update server needed.
+
+To ship a new version:
+
+1. Bump `Version:` in `shooting-results.php` (and `SR_VERSION`) and `Stable tag:` in `readme.txt`.
+2. Commit, then tag and push:
+   ```bash
+   git tag vX.Y.Z
+   git push origin main --tags
+   ```
+3. Publish a GitHub Release from that tag (`gh release create vX.Y.Z --generate-notes`).
+
+Sites poll for updates on their normal WP cron schedule (roughly every 12
+hours), or immediately if an admin clicks "Check again" on the Updates page.
