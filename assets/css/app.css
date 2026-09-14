@@ -288,6 +288,7 @@
 	background: none !important;
 	border: none !important;
 	border-radius: 0 !important;
+	box-shadow: none !important;
 	color: #1d2327 !important;
 	padding: 0 !important;
 }
@@ -318,6 +319,7 @@
 	background: none !important;
 	border: none !important;
 	border-radius: 0 !important;
+	box-shadow: none !important;
 	color: var(--sr-danger) !important;
 	cursor: pointer;
 	font-size: 16px;
