@@ -21,18 +21,26 @@ class SR_Shortcode {
 
 	public static function init() {
 		add_shortcode( self::TAG, array( __CLASS__, 'render' ) );
-		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'maybe_enqueue' ) );
+		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue' ) );
 	}
 
-	public static function maybe_enqueue() {
-		$post = get_post();
-		if ( ! is_singular() || ! $post || ! has_shortcode( (string) $post->post_content, self::TAG ) ) {
+	/**
+	 * Always enqueued on the front end (not gated behind is_singular() /
+	 * has_shortcode() detection), because page builders — Breakdance among
+	 * them — often render shortcode content outside the query context those
+	 * checks rely on, which silently skipped loading the app's CSS/JS
+	 * entirely and left the shortcode's container empty. The assets are a
+	 * few KB; that cost is worth not depending on builder internals.
+	 */
+	public static function enqueue() {
+		if ( is_admin() ) {
 			return;
 		}
 
 		wp_enqueue_style( 'sr-app', SR_PLUGIN_URL . 'assets/css/app.css', array(), SR_VERSION );
 		wp_enqueue_script( 'sr-app', SR_PLUGIN_URL . 'assets/js/app.js', array(), SR_VERSION, true );
 
+		$post                = get_post();
 		$initial_session_id = isset( $_GET['session'] ) ? absint( $_GET['session'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only view state, not a mutating request.
 
 		wp_localize_script(
@@ -41,7 +49,7 @@ class SR_Shortcode {
 			array(
 				'ajaxUrl'          => admin_url( 'admin-ajax.php' ),
 				'nonce'             => wp_create_nonce( 'sr_ajax' ),
-				'postId'            => $post->ID,
+				'postId'            => $post ? $post->ID : 0,
 				'initialSessionId' => $initial_session_id,
 				'i18n'              => self::i18n_strings(),
 			)

@@ -2,14 +2,14 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Shooting Results 1.1.0\n"
+"Project-Id-Version: Shooting Results 1.1.1\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/shooting-results\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-14T10:08:23+00:00\n"
+"POT-Creation-Date: 2026-09-14T10:29:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: shooting-results\n"
@@ -75,61 +75,61 @@ msgstr ""
 msgid "No WordPress account is needed to record results — just the page password. That also means recording can continue on a different device mid-competition: whoever takes over just opens the same page, enters the password, and picks the open session from the list."
 msgstr ""
 
-#: includes/class-sr-ajax.php:47
+#: includes/class-sr-ajax.php:51
 msgid "You do not have permission to do this."
 msgstr ""
 
-#: includes/class-sr-ajax.php:51
+#: includes/class-sr-ajax.php:55
 msgid "This page is password protected."
 msgstr ""
 
-#: includes/class-sr-ajax.php:91
+#: includes/class-sr-ajax.php:95
 msgid "Invalid number of shots per round."
 msgstr ""
 
-#: includes/class-sr-ajax.php:131
+#: includes/class-sr-ajax.php:135
 msgid "Enter a name."
 msgstr ""
 
-#: includes/class-sr-ajax.php:134
-#: includes/class-sr-ajax.php:180
+#: includes/class-sr-ajax.php:138
+#: includes/class-sr-ajax.php:184
 msgid "Invalid session."
 msgstr ""
 
-#: includes/class-sr-ajax.php:203
+#: includes/class-sr-ajax.php:207
 msgid "Entry not found."
 msgstr ""
 
-#: includes/class-sr-ajax.php:208
+#: includes/class-sr-ajax.php:212
 msgid "Invalid shot index."
 msgstr ""
 
-#: includes/class-sr-ajax.php:216
+#: includes/class-sr-ajax.php:220
 msgid "A shot score must be between 0 and 10."
 msgstr ""
 
-#: includes/class-sr-ajax.php:251
+#: includes/class-sr-ajax.php:255
 msgid "Session not found."
 msgstr ""
 
-#: includes/class-sr-ajax.php:292
+#: includes/class-sr-ajax.php:296
 msgid "Enter a valid email address."
 msgstr ""
 
-#: includes/class-sr-ajax.php:319
+#: includes/class-sr-ajax.php:323
 #: includes/class-sr-mailer.php:27
 msgid "Results session not found."
 msgstr ""
 
 #: includes/class-sr-mailer.php:53
 #: includes/class-sr-mailer.php:87
-#: includes/class-sr-shortcode.php:78
+#: includes/class-sr-shortcode.php:86
 msgid "Shooter"
 msgstr ""
 
 #: includes/class-sr-mailer.php:57
 #: includes/class-sr-mailer.php:87
-#: includes/class-sr-shortcode.php:79
+#: includes/class-sr-shortcode.php:87
 msgid "Total"
 msgstr ""
 
@@ -161,115 +161,115 @@ msgstr ""
 msgid "Sending the report email failed. Check the site's SMTP/mail configuration."
 msgstr ""
 
-#: includes/class-sr-shortcode.php:63
+#: includes/class-sr-shortcode.php:71
 msgid "Record Results"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:64
-#: includes/class-sr-shortcode.php:74
+#: includes/class-sr-shortcode.php:72
+#: includes/class-sr-shortcode.php:82
 msgid "Sessions"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:65
+#: includes/class-sr-shortcode.php:73
 msgid "No sessions yet. Start with \"Record Results\"."
 msgstr ""
 
-#: includes/class-sr-shortcode.php:66
+#: includes/class-sr-shortcode.php:74
 msgid "Draft"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:67
+#: includes/class-sr-shortcode.php:75
 msgid "Sent"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:68
+#: includes/class-sr-shortcode.php:76
 msgid "shots per round"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:69
+#: includes/class-sr-shortcode.php:77
 msgid "New Shooting Session"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:70
+#: includes/class-sr-shortcode.php:78
 msgid "Choose the number of shots per round."
 msgstr ""
 
-#: includes/class-sr-shortcode.php:71
+#: includes/class-sr-shortcode.php:79
 msgid "Other"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:72
+#: includes/class-sr-shortcode.php:80
 msgid "Cancel"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:73
+#: includes/class-sr-shortcode.php:81
 msgid "Start"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:75
+#: includes/class-sr-shortcode.php:83
 msgid "Saved"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:76
+#: includes/class-sr-shortcode.php:84
 msgid "Saving…"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:77
+#: includes/class-sr-shortcode.php:85
 msgid "Round"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:80
+#: includes/class-sr-shortcode.php:88
 msgid "Remove shooter"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:81
+#: includes/class-sr-shortcode.php:89
 msgid "Remove this shooter from upcoming rounds? Past rounds are kept in the report."
 msgstr ""
 
-#: includes/class-sr-shortcode.php:82
+#: includes/class-sr-shortcode.php:90
 msgid "Shooter name"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:83
+#: includes/class-sr-shortcode.php:91
 msgid "Add Shooter"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:84
+#: includes/class-sr-shortcode.php:92
 msgid "Start New Round"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:85
+#: includes/class-sr-shortcode.php:93
 msgid "Send Report"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:86
+#: includes/class-sr-shortcode.php:94
 msgid "Email address"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:87
+#: includes/class-sr-shortcode.php:95
 msgid "Send"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:88
+#: includes/class-sr-shortcode.php:96
 msgid "Report sent."
 msgstr ""
 
-#: includes/class-sr-shortcode.php:89
+#: includes/class-sr-shortcode.php:97
 msgid "Last sent"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:90
+#: includes/class-sr-shortcode.php:98
 msgid "Shot"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:91
+#: includes/class-sr-shortcode.php:99
 msgid "Clear"
 msgstr ""
 
-#: includes/class-sr-shortcode.php:92
+#: includes/class-sr-shortcode.php:100
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: includes/class-sr-shortcode.php:93
+#: includes/class-sr-shortcode.php:101
 msgid "Continue open session"
 msgstr ""

@@ -168,7 +168,14 @@
 	/* ---------- Session/table view ---------- */
 
 	function openSession( sessionId ) {
-		request( 'sr_get_session', { session_id: sessionId } ).then( applyState );
+		request( 'sr_get_session', { session_id: sessionId } )
+			.then( applyState )
+			.catch( function () {
+				// Most likely a stale ?session= link (or one shared before
+				// the session was created) — fall back to the list instead
+				// of leaving the page blank.
+				loadList();
+			} );
 	}
 
 	function applyState( data ) {

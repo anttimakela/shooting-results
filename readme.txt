@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,10 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.1.1 =
+* Fixed: the front-end shortcode's CSS/JS could fail to load entirely under some page-builder rendering (e.g. Breakdance), leaving the shortcode's container empty with no console errors.
+* Fixed: opening a stale/invalid `?session=` link left the page blank with an unhandled error instead of falling back to the session list.
 
 = 1.1.0 =
 * Results recording moved from a wp-admin page to a `[shooting_results]` shortcode, so it can be placed on any front-end page.
