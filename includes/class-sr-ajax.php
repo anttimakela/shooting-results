@@ -47,7 +47,7 @@ class SR_Ajax {
 		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
 		$post    = $post_id ? get_post( $post_id ) : null;
 
-		if ( ! $post || ! has_shortcode( (string) $post->post_content, SR_Shortcode::TAG ) ) {
+		if ( ! $post || ! SR_Shortcode::hosts_shortcode( $post_id ) ) {
 			wp_send_json_error( array( 'message' => __( 'You do not have permission to do this.', 'shooting-results' ) ), 403 );
 		}
 

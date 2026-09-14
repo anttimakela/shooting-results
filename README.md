@@ -52,8 +52,8 @@ page password, anyone who has it can open the page on any device and pick
 up the currently open session from the list.
 
 `SR_Ajax::guard()` (`includes/class-sr-ajax.php`) enforces the same rule
-server-side on every AJAX call: the request must name a `post_id` whose
-`post_content` actually contains the `[shooting_results]` shortcode (so an
+server-side on every AJAX call: the request must name a `post_id` that
+`SR_Shortcode::hosts_shortcode()` recognizes as a legitimate host (so an
 arbitrary unrelated, unprotected post/page ID can't be used to bypass the
 check), and `post_password_required()` must be false for that post —
 i.e. the visitor's `wp-postpass_*` cookie matches, or they're logged in with
@@ -61,6 +61,17 @@ edit rights on the post (WordPress's own password-bypass rule, which is why
 admins never need the password). If the page isn't password-protected at
 all, the AJAX endpoints are exactly as open as the page itself — the
 plugin doesn't add its own access control beyond mirroring the page's.
+
+`hosts_shortcode()` checks a post meta flag (`_sr_hosts_shortcode`) set the
+first time `SR_Shortcode::render()` actually executes for a post, rather
+than checking `has_shortcode( $post->post_content, ... )` directly. Page
+builders — Breakdance among them — store their content outside
+`post_content` and only run the shortcode through WordPress's normal
+shortcode processing at render time, so checking `post_content` missed it
+entirely on such builders and made every AJAX call fail with a permission
+error. The meta flag works regardless of how the page was built, since it's
+set by the shortcode's own callback actually running, not by inspecting
+where the builder chose to store its markup.
 
 ### Why custom tables instead of a Custom Post Type
 

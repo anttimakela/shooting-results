@@ -17,7 +17,8 @@ defined( 'ABSPATH' ) || exit;
 
 class SR_Shortcode {
 
-	const TAG = 'shooting_results';
+	const TAG           = 'shooting_results';
+	const HOST_META_KEY = '_sr_hosts_shortcode';
 
 	public static function init() {
 		add_shortcode( self::TAG, array( __CLASS__, 'render' ) );
@@ -59,11 +60,36 @@ class SR_Shortcode {
 	public static function render() {
 		$post = get_post();
 
+		if ( $post ) {
+			self::remember_host( $post->ID );
+		}
+
 		if ( $post && post_password_required( $post ) ) {
 			return get_the_password_form( $post );
 		}
 
 		return '<div id="sr-app" class="sr-frontend"></div>';
+	}
+
+	/**
+	 * Marks a post as a legitimate host of this shortcode, for
+	 * SR_Ajax::guard() to trust later. This exists instead of checking
+	 * has_shortcode( $post->post_content, self::TAG ) directly, because
+	 * page builders — Breakdance among them — store their content outside
+	 * post_content and only run the shortcode through WordPress's normal
+	 * do_shortcode() machinery when actually rendering the page. Checking
+	 * post_content directly missed that entirely and made every AJAX call
+	 * fail with a permission error on such builders, even though the
+	 * shortcode itself rendered fine.
+	 */
+	private static function remember_host( $post_id ) {
+		if ( ! get_post_meta( $post_id, self::HOST_META_KEY, true ) ) {
+			update_post_meta( $post_id, self::HOST_META_KEY, 1 );
+		}
+	}
+
+	public static function hosts_shortcode( $post_id ) {
+		return (bool) get_post_meta( $post_id, self::HOST_META_KEY, true );
 	}
 
 	private static function i18n_strings() {
