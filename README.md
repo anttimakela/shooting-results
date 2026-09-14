@@ -23,21 +23,44 @@ the session list.
 ## Architecture
 
 ```
-shooting-results.php              Plugin bootstrap, activation hook
+shooting-results.php              Plugin bootstrap, activation hook, legacy-role cleanup
 includes/
   class-sr-db.php                 Custom table schema (sessions/shooters/rounds/entries)
-  class-sr-capabilities.php       "Range Staff" role + sr_manage_results capability
-  class-sr-admin-page.php         wp-admin menu page, asset enqueue, i18n strings → JS
+  class-sr-shortcode.php          [shooting_results] shortcode — the front-end recording page
+  class-sr-admin-page.php         wp-admin Settings page (copyable shortcode + instructions only)
   class-sr-ajax.php               All AJAX endpoints — the only place data is written
   class-sr-xlsx-writer.php        Dependency-free .xlsx builder (ZipArchive + raw OOXML)
   class-sr-mailer.php             Builds the workbook from DB state and wp_mail()s it
 assets/
-  css/admin.css                   Light wp-admin-native styling, hunter-green/blaze-orange accents
-  js/admin.js                     Vanilla JS — renders the UI, calls the AJAX endpoints
+  css/app.css                     Mobile-first styling for the front-end shortcode UI
+  js/app.js                       Vanilla JS — renders the UI, calls the AJAX endpoints
+  css/settings.css, js/settings.js  The wp-admin Settings page's "copy shortcode" button
 languages/
   shooting-results.pot            Translation template (regenerate with WP-CLI, see below)
   shooting-results-fi.po/.mo      Finnish translation (included, compiled)
 ```
+
+### Access model: page password, not a WordPress role
+
+Results recording lives on whatever front-end page the site owner puts the
+`[shooting_results]` shortcode on, and access is controlled by WordPress's
+built-in page-password protection rather than a login or capability. This
+was a deliberate trade against the earlier "Range Staff" role/capability
+(removed in 1.1.0): recorders often change mid-competition and need to
+switch devices, which a per-user login model makes clunky. With a shared
+page password, anyone who has it can open the page on any device and pick
+up the currently open session from the list.
+
+`SR_Ajax::guard()` (`includes/class-sr-ajax.php`) enforces the same rule
+server-side on every AJAX call: the request must name a `post_id` whose
+`post_content` actually contains the `[shooting_results]` shortcode (so an
+arbitrary unrelated, unprotected post/page ID can't be used to bypass the
+check), and `post_password_required()` must be false for that post —
+i.e. the visitor's `wp-postpass_*` cookie matches, or they're logged in with
+edit rights on the post (WordPress's own password-bypass rule, which is why
+admins never need the password). If the page isn't password-protected at
+all, the AJAX endpoints are exactly as open as the page itself — the
+plugin doesn't add its own access control beyond mirroring the page's.
 
 ### Why custom tables instead of a Custom Post Type
 
@@ -77,10 +100,10 @@ the database and in the exported report.
 
 ## AJAX endpoints (`admin-ajax.php?action=...`)
 
-All require a valid `sr_ajax` nonce and the `sr_manage_results` capability
-(enforced in `SR_Ajax::guard()`), and every round/shooter ID received from
-the browser is checked to actually belong to the session ID also received,
-before touching the database.
+All require a valid `sr_ajax` nonce and pass the page-password check in
+`SR_Ajax::guard()` (see "Access model" above), and every round/shooter ID
+received from the browser is checked to actually belong to the session ID
+also received, before touching the database.
 
 | Action | Purpose |
 |---|---|
@@ -92,13 +115,6 @@ before touching the database.
 | `sr_set_shot` | Write one shot score (0–10 or empty) |
 | `sr_start_new_round` | New round, active shooters carried over |
 | `sr_send_report` | Build the .xlsx from DB state and email it |
-
-## Roles & capabilities
-
-Activation adds the `sr_manage_results` capability to Administrators and
-creates a **Range Staff** role that has just that capability — so a club
-doesn't need to hand out full admin accounts to whoever is running the
-scoreboard on a given day.
 
 ## Translations
 

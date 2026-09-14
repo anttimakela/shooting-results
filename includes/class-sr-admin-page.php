@@ -1,7 +1,9 @@
 <?php
 /**
- * The wp-admin page: registers the menu entry, enqueues assets, and hands
- * the JS its translated strings + nonce via wp_localize_script.
+ * The wp-admin Settings page. It has no results-recording UI of its own —
+ * that lives on the front end behind the [shooting_results] shortcode (see
+ * class-sr-shortcode.php) — this page just hands the admin the shortcode to
+ * paste onto a page, plus a reminder to password-protect that page.
  *
  * @package ShootingResults
  */
@@ -20,7 +22,7 @@ class SR_Admin_Page {
 		add_menu_page(
 			__( 'Shooting Results', 'shooting-results' ),
 			__( 'Shooting Results', 'shooting-results' ),
-			SR_Capabilities::CAPABILITY,
+			'manage_options',
 			self::PAGE_SLUG,
 			array( __CLASS__, 'render' ),
 			'dashicons-clipboard',
@@ -35,66 +37,41 @@ class SR_Admin_Page {
 			return;
 		}
 
-		wp_enqueue_style( 'sr-admin', SR_PLUGIN_URL . 'assets/css/admin.css', array(), SR_VERSION );
-		wp_enqueue_script( 'sr-admin', SR_PLUGIN_URL . 'assets/js/admin.js', array(), SR_VERSION, true );
-
-		$initial_session_id = isset( $_GET['session'] ) ? absint( $_GET['session'] ) : 0; // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only view state, not a mutating request.
-
-		wp_localize_script(
-			'sr-admin',
-			'SR',
-			array(
-				'ajaxUrl'          => admin_url( 'admin-ajax.php' ),
-				'nonce'             => wp_create_nonce( 'sr_ajax' ),
-				'initialSessionId' => $initial_session_id,
-				'i18n'              => self::i18n_strings(),
-			)
-		);
-	}
-
-	private static function i18n_strings() {
-		return array(
-			'recordResults'        => __( 'Record Results', 'shooting-results' ),
-			'sessions'              => __( 'Sessions', 'shooting-results' ),
-			'noSessions'            => __( 'No sessions yet. Start with "Record Results".', 'shooting-results' ),
-			'draft'                 => __( 'Draft', 'shooting-results' ),
-			'sent'                  => __( 'Sent', 'shooting-results' ),
-			'shotsPerRound'         => __( 'shots per round', 'shooting-results' ),
-			'newSession'            => __( 'New Shooting Session', 'shooting-results' ),
-			'chooseShots'           => __( 'Choose the number of shots per round.', 'shooting-results' ),
-			'custom'                => __( 'Other', 'shooting-results' ),
-			'cancel'                => __( 'Cancel', 'shooting-results' ),
-			'start'                 => __( 'Start', 'shooting-results' ),
-			'backToList'            => __( 'Sessions', 'shooting-results' ),
-			'saved'                 => __( 'Saved', 'shooting-results' ),
-			'saving'                => __( 'Saving…', 'shooting-results' ),
-			'round'                 => __( 'Round', 'shooting-results' ),
-			'shooter'               => __( 'Shooter', 'shooting-results' ),
-			'total'                 => __( 'Total', 'shooting-results' ),
-			'removeShooter'         => __( 'Remove shooter', 'shooting-results' ),
-			'confirmRemoveShooter'  => __( 'Remove this shooter from upcoming rounds? Past rounds are kept in the report.', 'shooting-results' ),
-			'shooterName'           => __( 'Shooter name', 'shooting-results' ),
-			'addShooter'            => __( 'Add Shooter', 'shooting-results' ),
-			'startNewRound'         => __( 'Start New Round', 'shooting-results' ),
-			'sendReport'            => __( 'Send Report', 'shooting-results' ),
-			'emailPlaceholder'      => __( 'Email address', 'shooting-results' ),
-			'send'                  => __( 'Send', 'shooting-results' ),
-			'reportSent'            => __( 'Report sent.', 'shooting-results' ),
-			'lastSent'              => __( 'Last sent', 'shooting-results' ),
-			'shot'                  => __( 'Shot', 'shooting-results' ),
-			'clear'                 => __( 'Clear', 'shooting-results' ),
-			'genericError'          => __( 'Something went wrong. Please try again.', 'shooting-results' ),
-		);
+		wp_enqueue_style( 'sr-settings', SR_PLUGIN_URL . 'assets/css/settings.css', array(), SR_VERSION );
+		wp_enqueue_script( 'sr-settings', SR_PLUGIN_URL . 'assets/js/settings.js', array(), SR_VERSION, true );
 	}
 
 	public static function render() {
-		if ( ! SR_Capabilities::current_user_can_manage() ) {
+		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_die( esc_html__( 'You do not have permission to access this page.', 'shooting-results' ) );
 		}
+
+		$shortcode = '[' . SR_Shortcode::TAG . ']';
 		?>
-		<div class="wrap sr-wrap">
+		<div class="wrap sr-settings-wrap">
 			<h1><?php esc_html_e( 'Shooting Results', 'shooting-results' ); ?></h1>
-			<div id="sr-app"></div>
+
+			<div class="card sr-settings-card">
+				<h2><?php esc_html_e( '1. Add results recording to a page', 'shooting-results' ); ?></h2>
+				<p><?php esc_html_e( 'Create (or pick) a page, paste this shortcode into it, and publish. That page becomes the results-recording screen — it works on phones, tablets, and desktops.', 'shooting-results' ); ?></p>
+				<p class="sr-shortcode-row">
+					<input type="text" readonly id="sr-shortcode-field" class="sr-shortcode-field" value="<?php echo esc_attr( $shortcode ); ?>" />
+					<button type="button" class="button button-primary" id="sr-copy-shortcode"><?php esc_html_e( 'Copy shortcode', 'shooting-results' ); ?></button>
+					<span id="sr-copy-confirm" class="sr-copy-confirm" hidden><?php esc_html_e( 'Copied!', 'shooting-results' ); ?></span>
+				</p>
+
+				<h2><?php esc_html_e( '2. Restrict who can record results', 'shooting-results' ); ?></h2>
+				<p>
+					<?php
+					printf(
+						/* translators: %s: the "Password Protected" visibility option, as labeled in the block editor. */
+						esc_html__( 'On that page, open the editor\'s Visibility setting (in the Summary/Status panel) and choose %s. Share the password only with whoever is recording results that day.', 'shooting-results' ),
+						'<strong>' . esc_html__( 'Password Protected', 'shooting-results' ) . '</strong>'
+					);
+					?>
+				</p>
+				<p><?php esc_html_e( 'No WordPress account is needed to record results — just the page password. That also means recording can continue on a different device mid-competition: whoever takes over just opens the same page, enters the password, and picks the open session from the list.', 'shooting-results' ); ?></p>
+			</div>
 		</div>
 		<?php
 	}

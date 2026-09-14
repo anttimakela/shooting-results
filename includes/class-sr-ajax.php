@@ -24,14 +24,35 @@ class SR_Ajax {
 			'sr_send_report',
 		);
 		foreach ( $actions as $action ) {
+			// _nopriv_ too: recording is gated by the page password (see
+			// guard() below), not by being logged in — most visitors
+			// hitting these endpoints won't have a WordPress account.
 			add_action( 'wp_ajax_' . $action, array( __CLASS__, $action ) );
+			add_action( 'wp_ajax_nopriv_' . $action, array( __CLASS__, $action ) );
 		}
 	}
 
+	/**
+	 * Gates every AJAX action behind the same rule the front-end page uses:
+	 * the request must name a post that actually carries the
+	 * [shooting_results] shortcode, and that post must not currently
+	 * require a password from this visitor. There's no separate login or
+	 * capability — anyone who has the page's password (or can edit the
+	 * post) may record results, which is what lets a session be picked up
+	 * on a different device mid-competition.
+	 */
 	private static function guard() {
 		check_ajax_referer( 'sr_ajax', 'nonce' );
-		if ( ! SR_Capabilities::current_user_can_manage() ) {
+
+		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
+		$post    = $post_id ? get_post( $post_id ) : null;
+
+		if ( ! $post || ! has_shortcode( (string) $post->post_content, SR_Shortcode::TAG ) ) {
 			wp_send_json_error( array( 'message' => __( 'You do not have permission to do this.', 'shooting-results' ) ), 403 );
+		}
+
+		if ( post_password_required( $post ) ) {
+			wp_send_json_error( array( 'message' => __( 'This page is password protected.', 'shooting-results' ) ), 403 );
 		}
 	}
 

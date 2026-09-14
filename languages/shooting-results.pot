@@ -2,23 +2,23 @@
 # This file is distributed under the GPL v2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Shooting Results 1.0.0\n"
+"Project-Id-Version: Shooting Results 1.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/shooting-results\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-14T09:28:46+00:00\n"
+"POT-Creation-Date: 2026-09-14T10:08:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: shooting-results\n"
 
 #. Plugin Name of the plugin
 #: shooting-results.php
-#: includes/class-sr-admin-page.php:21
-#: includes/class-sr-admin-page.php:22
-#: includes/class-sr-admin-page.php:96
+#: includes/class-sr-admin-page.php:23
+#: includes/class-sr-admin-page.php:24
+#: includes/class-sr-admin-page.php:52
 msgid "Shooting Results"
 msgstr ""
 
@@ -29,7 +29,7 @@ msgstr ""
 
 #. Description of the plugin
 #: shooting-results.php
-msgid "Fast, big-button competition results recording for shooting ranges — every score autosaves immediately, so a page refresh never loses data. Exports an Excel report by email."
+msgid "Fast, big-button competition results recording for shooting ranges — every score autosaves immediately, so a page refresh never loses data. Record results from any device on a password-protected page, and export an Excel report by email."
 msgstr ""
 
 #. Author of the plugin
@@ -37,175 +37,100 @@ msgstr ""
 msgid "Antti Mäkelä"
 msgstr ""
 
-#: includes/class-sr-admin-page.php:57
-msgid "Record Results"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:58
-#: includes/class-sr-admin-page.php:68
-msgid "Sessions"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:59
-msgid "No sessions yet. Start with \"Record Results\"."
-msgstr ""
-
-#: includes/class-sr-admin-page.php:60
-msgid "Draft"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:61
-msgid "Sent"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:62
-msgid "shots per round"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:63
-msgid "New Shooting Session"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:64
-msgid "Choose the number of shots per round."
-msgstr ""
-
-#: includes/class-sr-admin-page.php:65
-msgid "Other"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:66
-msgid "Cancel"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:67
-msgid "Start"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:69
-msgid "Saved"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:70
-msgid "Saving…"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:71
-msgid "Round"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:72
-#: includes/class-sr-mailer.php:53
-#: includes/class-sr-mailer.php:87
-msgid "Shooter"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:73
-#: includes/class-sr-mailer.php:57
-#: includes/class-sr-mailer.php:87
-msgid "Total"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:74
-msgid "Remove shooter"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:75
-msgid "Remove this shooter from upcoming rounds? Past rounds are kept in the report."
-msgstr ""
-
-#: includes/class-sr-admin-page.php:76
-msgid "Shooter name"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:77
-msgid "Add Shooter"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:78
-msgid "Start New Round"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:79
-msgid "Send Report"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:80
-msgid "Email address"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:81
-msgid "Send"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:82
-msgid "Report sent."
-msgstr ""
-
-#: includes/class-sr-admin-page.php:83
-msgid "Last sent"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:84
-msgid "Shot"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:85
-msgid "Clear"
-msgstr ""
-
-#: includes/class-sr-admin-page.php:86
-msgid "Something went wrong. Please try again."
-msgstr ""
-
-#: includes/class-sr-admin-page.php:92
+#: includes/class-sr-admin-page.php:46
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: includes/class-sr-ajax.php:34
+#: includes/class-sr-admin-page.php:55
+msgid "1. Add results recording to a page"
+msgstr ""
+
+#: includes/class-sr-admin-page.php:56
+msgid "Create (or pick) a page, paste this shortcode into it, and publish. That page becomes the results-recording screen — it works on phones, tablets, and desktops."
+msgstr ""
+
+#: includes/class-sr-admin-page.php:59
+msgid "Copy shortcode"
+msgstr ""
+
+#: includes/class-sr-admin-page.php:60
+msgid "Copied!"
+msgstr ""
+
+#: includes/class-sr-admin-page.php:63
+msgid "2. Restrict who can record results"
+msgstr ""
+
+#. translators: %s: the "Password Protected" visibility option, as labeled in the block editor.
+#: includes/class-sr-admin-page.php:68
+#, php-format
+msgid "On that page, open the editor's Visibility setting (in the Summary/Status panel) and choose %s. Share the password only with whoever is recording results that day."
+msgstr ""
+
+#: includes/class-sr-admin-page.php:69
+msgid "Password Protected"
+msgstr ""
+
+#: includes/class-sr-admin-page.php:73
+msgid "No WordPress account is needed to record results — just the page password. That also means recording can continue on a different device mid-competition: whoever takes over just opens the same page, enters the password, and picks the open session from the list."
+msgstr ""
+
+#: includes/class-sr-ajax.php:47
 msgid "You do not have permission to do this."
 msgstr ""
 
-#: includes/class-sr-ajax.php:74
+#: includes/class-sr-ajax.php:51
+msgid "This page is password protected."
+msgstr ""
+
+#: includes/class-sr-ajax.php:91
 msgid "Invalid number of shots per round."
 msgstr ""
 
-#: includes/class-sr-ajax.php:114
+#: includes/class-sr-ajax.php:131
 msgid "Enter a name."
 msgstr ""
 
-#: includes/class-sr-ajax.php:117
-#: includes/class-sr-ajax.php:163
+#: includes/class-sr-ajax.php:134
+#: includes/class-sr-ajax.php:180
 msgid "Invalid session."
 msgstr ""
 
-#: includes/class-sr-ajax.php:186
+#: includes/class-sr-ajax.php:203
 msgid "Entry not found."
 msgstr ""
 
-#: includes/class-sr-ajax.php:191
+#: includes/class-sr-ajax.php:208
 msgid "Invalid shot index."
 msgstr ""
 
-#: includes/class-sr-ajax.php:199
+#: includes/class-sr-ajax.php:216
 msgid "A shot score must be between 0 and 10."
 msgstr ""
 
-#: includes/class-sr-ajax.php:234
+#: includes/class-sr-ajax.php:251
 msgid "Session not found."
 msgstr ""
 
-#: includes/class-sr-ajax.php:275
+#: includes/class-sr-ajax.php:292
 msgid "Enter a valid email address."
 msgstr ""
 
-#: includes/class-sr-ajax.php:302
+#: includes/class-sr-ajax.php:319
 #: includes/class-sr-mailer.php:27
 msgid "Results session not found."
 msgstr ""
 
-#: includes/class-sr-capabilities.php:25
-msgid "Range Staff"
+#: includes/class-sr-mailer.php:53
+#: includes/class-sr-mailer.php:87
+#: includes/class-sr-shortcode.php:78
+msgid "Shooter"
+msgstr ""
+
+#: includes/class-sr-mailer.php:57
+#: includes/class-sr-mailer.php:87
+#: includes/class-sr-shortcode.php:79
+msgid "Total"
 msgstr ""
 
 #. translators: %d: round number
@@ -234,4 +159,117 @@ msgstr ""
 
 #: includes/class-sr-mailer.php:112
 msgid "Sending the report email failed. Check the site's SMTP/mail configuration."
+msgstr ""
+
+#: includes/class-sr-shortcode.php:63
+msgid "Record Results"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:64
+#: includes/class-sr-shortcode.php:74
+msgid "Sessions"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:65
+msgid "No sessions yet. Start with \"Record Results\"."
+msgstr ""
+
+#: includes/class-sr-shortcode.php:66
+msgid "Draft"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:67
+msgid "Sent"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:68
+msgid "shots per round"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:69
+msgid "New Shooting Session"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:70
+msgid "Choose the number of shots per round."
+msgstr ""
+
+#: includes/class-sr-shortcode.php:71
+msgid "Other"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:72
+msgid "Cancel"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:73
+msgid "Start"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:75
+msgid "Saved"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:76
+msgid "Saving…"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:77
+msgid "Round"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:80
+msgid "Remove shooter"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:81
+msgid "Remove this shooter from upcoming rounds? Past rounds are kept in the report."
+msgstr ""
+
+#: includes/class-sr-shortcode.php:82
+msgid "Shooter name"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:83
+msgid "Add Shooter"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:84
+msgid "Start New Round"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:85
+msgid "Send Report"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:86
+msgid "Email address"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:87
+msgid "Send"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:88
+msgid "Report sent."
+msgstr ""
+
+#: includes/class-sr-shortcode.php:89
+msgid "Last sent"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:90
+msgid "Shot"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:91
+msgid "Clear"
+msgstr ""
+
+#: includes/class-sr-shortcode.php:92
+msgid "Something went wrong. Please try again."
+msgstr ""
+
+#: includes/class-sr-shortcode.php:93
+msgid "Continue open session"
 msgstr ""

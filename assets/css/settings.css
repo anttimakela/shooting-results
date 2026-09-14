@@ -1,0 +1,26 @@
+.sr-settings-wrap {
+	max-width: 700px;
+}
+
+.sr-settings-card {
+	padding: 20px;
+	margin-top: 16px;
+}
+
+.sr-shortcode-row {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 10px;
+}
+
+.sr-shortcode-field {
+	font-size: 16px;
+	padding: 8px 10px;
+	width: 220px;
+}
+
+.sr-copy-confirm {
+	color: #3f7d33;
+	font-weight: 600;
+}
