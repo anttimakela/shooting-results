@@ -123,13 +123,17 @@
 			html += '<p>' + t( 'noSessions' ) + '</p>';
 		} else {
 			sessions.forEach( function ( s ) {
-				var badge = 'sent' === s.status
+				var isSent = 'sent' === s.status;
+				var badge = isSent
 					? '<span class="sr-badge sr-badge-sent">' + t( 'sent' ) + '</span>'
 					: '<span class="sr-badge sr-badge-draft">' + t( 'draft' ) + '</span>';
 				var detail = 'shotgun' === s.discipline
 					? t( 'shotgun' )
 					: s.shots_per_round + ' ' + t( 'shotsPerRound' );
-				html += '<div class="sr-session-list-item" data-session-id="' + s.id + '">' +
+				// Sent sessions are closed — no click handler below, and
+				// no data-session-id needed since there's nothing to open.
+				html += '<div class="sr-session-list-item' + ( isSent ? ' is-closed' : '' ) + '"' +
+					( isSent ? '' : ' data-session-id="' + s.id + '"' ) + '>' +
 					'<span>' + escapeHtml( formatDate( s.created_at ) ) + ' &middot; ' + escapeHtml( detail ) + '</span>' +
 					badge +
 					'</div>';
@@ -139,7 +143,7 @@
 		root.innerHTML = html;
 
 		document.getElementById( 'sr-new-session' ).addEventListener( 'click', showNewSessionPrompt );
-		root.querySelectorAll( '.sr-session-list-item' ).forEach( function ( el ) {
+		root.querySelectorAll( '.sr-session-list-item:not(.is-closed)' ).forEach( function ( el ) {
 			el.addEventListener( 'click', function () {
 				openSession( parseInt( el.getAttribute( 'data-session-id' ), 10 ) );
 			} );
@@ -345,6 +349,7 @@
 		html += '</div>';
 
 		html += '<div class="sr-finish-section">';
+		html += '<p class="sr-hint">' + t( 'closeSessionHint' ) + '</p>';
 		html += '<div class="sr-row">';
 		html += '<button class="sr-btn sr-btn-accent" id="sr-toggle-email">' + t( 'sendReport' ) + '</button>';
 		html += '</div>';
@@ -440,9 +445,12 @@
 			var btn = document.getElementById( 'sr-send-email' );
 			btn.disabled = true;
 			request( 'sr_send_report', { session_id: state.session.id, email: email } )
-				.then( function ( data ) {
-					applyState( data );
+				.then( function () {
+					// Sending the report closes the session — it can't be
+					// edited or viewed again afterward, so there's nothing
+					// left to show here; go back to the list.
 					window.alert( t( 'reportSent' ) );
+					loadList();
 				} )
 				.catch( function ( err ) {
 					window.alert( err.message );

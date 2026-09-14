@@ -118,7 +118,19 @@ class SR_Ajax {
 	public static function sr_get_session() {
 		self::guard();
 		$session_id = isset( $_POST['session_id'] ) ? absint( $_POST['session_id'] ) : 0;
-		$state       = self::build_session_state( $session_id );
+
+		global $wpdb;
+		$status = $wpdb->get_var( $wpdb->prepare( 'SELECT status FROM ' . SR_DB::table( 'sessions' ) . ' WHERE id = %d', $session_id ) );
+		if ( 'sent' === $status ) {
+			// Sending the report closes a session for good — same "no
+			// status code" reasoning as the not-found case below: the
+			// client already treats this as routine (falls back to the
+			// list) rather than something to alert on.
+			wp_send_json_error( array( 'message' => __( 'This session has been closed — its report was already sent, and it can no longer be viewed.', 'shooting-results' ) ) );
+			return;
+		}
+
+		$state = self::build_session_state( $session_id );
 		if ( is_wp_error( $state ) ) {
 			// No status code (stays HTTP 200): app.js's openSession() treats
 			// a missing session as routine — e.g. a stale ?session= link —

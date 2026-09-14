@@ -130,7 +130,7 @@ also received, before touching the database.
 |---|---|
 | `sr_list_sessions` | List drafts + sent sessions |
 | `sr_create_session` | Start a new session + round 1 |
-| `sr_get_session` | Full nested state — used on load/refresh |
+| `sr_get_session` | Full nested state — used on load/refresh. Refuses once the session's `status` is `sent`: sending the report closes a session for good, so it can no longer be reopened for viewing or editing (the front end also stops linking to it in the session list) |
 | `sr_add_shooter` | Add a shooter to the current round |
 | `sr_remove_shooter` | Drop a shooter from the round being viewed |
 | `sr_set_shot` | Write one shot/result score (0–10 rifle, 0–200 shotgun, or empty) |
