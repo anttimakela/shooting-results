@@ -272,6 +272,14 @@
 	background: var(--sr-green-bg);
 }
 
+/* Only shown on narrow screens (see the stacked-layout media query below),
+   where the header row's shot numbers are hidden along with the rest of
+   the table chrome — without this there'd be no way to tell which shot a
+   button is once they wrap onto their own line under the shooter's name. */
+.sr-shot-index {
+	display: none;
+}
+
 .sr-total-cell {
 	font-weight: 800;
 	color: var(--sr-green-dark);
@@ -288,6 +296,77 @@
 	padding: 4px;
 	vertical-align: middle;
 	margin-left: 6px;
+}
+
+/* Narrow phones: the sticky shooter-name column was eating space that
+   the score cells needed, forcing a lot of horizontal scrolling just to
+   see a few shots. Below this width, each row becomes a small "card":
+   the name on its own full-width line, with the round's score buttons
+   (and total) wrapping in a row underneath instead of staying in fixed
+   table columns. */
+@media (max-width: 639px) {
+	.sr-table-scroll {
+		overflow-x: visible;
+		border: none;
+	}
+
+	.sr-table thead {
+		display: none;
+	}
+
+	.sr-table,
+	.sr-table tbody {
+		display: block;
+		width: 100%;
+	}
+
+	.sr-table tr {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 4px 6px;
+		padding: 10px 0;
+		border-bottom: 1px solid var(--sr-border);
+	}
+
+	.sr-table td {
+		display: block;
+		border-bottom: none;
+		padding: 0;
+		white-space: normal;
+	}
+
+	.sr-table td.sr-name-cell {
+		flex: 0 0 100%;
+		position: static;
+		padding: 0 0 4px;
+	}
+
+	.sr-shot-cell {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		line-height: 1.1;
+	}
+
+	.sr-shot-index {
+		display: block;
+		font-size: 9px;
+		font-weight: 600;
+		color: var(--sr-text-muted);
+	}
+
+	.sr-total-cell {
+		min-width: 44px;
+		height: 44px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 6px;
+	}
 }
 
 .sr-autosave-indicator {

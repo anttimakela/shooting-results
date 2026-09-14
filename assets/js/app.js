@@ -330,8 +330,14 @@
 			html += '<button class="sr-remove-shooter" data-shooter-id="' + entry.shooter_id + '" title="' + t( 'removeShooter' ) + '">&#128465;</button>';
 			html += '</td>';
 			entry.shots.forEach( function ( shot, idx ) {
+				// .sr-shot-index is only shown by CSS on narrow screens,
+				// where the stacked layout hides the column-number header
+				// row — without it there'd be no way to tell which shot a
+				// given button is once shots wrap onto their own line
+				// below the shooter's name.
+				var indexLabel = isShotgun ? '' : '<span class="sr-shot-index">' + ( idx + 1 ) + '</span>';
 				html += '<td><button class="sr-shot-cell" data-entry-id="' + entry.entry_id + '" data-shot-index="' + idx + '" data-shooter="' + escapeHtml( shooterName( entry.shooter_id ) ) + '" data-shotgun="' + ( isShotgun ? '1' : '' ) + '">' +
-					( shot === null ? '–' : shot ) + '</button></td>';
+					indexLabel + '<span class="sr-shot-value">' + ( shot === null ? '–' : shot ) + '</span></button></td>';
 			} );
 			html += '<td class="sr-total-cell">' + total + '</td>';
 			html += '</tr>';
@@ -388,12 +394,13 @@
 
 		root.querySelectorAll( '.sr-shot-cell' ).forEach( function ( btn ) {
 			btn.addEventListener( 'click', function () {
+				var valueText = btn.querySelector( '.sr-shot-value' ).textContent;
 				openKeypad( {
 					entryId: parseInt( btn.getAttribute( 'data-entry-id' ), 10 ),
 					shotIndex: parseInt( btn.getAttribute( 'data-shot-index' ), 10 ),
 					shooterName: btn.getAttribute( 'data-shooter' ),
 					shotgun: !! btn.getAttribute( 'data-shotgun' ),
-					currentValue: '–' === btn.textContent ? null : parseInt( btn.textContent, 10 ),
+					currentValue: '–' === valueText ? null : parseInt( valueText, 10 ),
 				} );
 			} );
 		} );
