@@ -319,6 +319,9 @@
 	padding: 24px;
 	width: 100%;
 	max-width: 420px;
+	max-height: 90vh;
+	max-height: 90dvh;
+	overflow-y: auto;
 	box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.25);
 }
 
@@ -362,4 +365,43 @@
 	grid-column: span 2;
 	color: var(--sr-danger);
 	font-size: 14px;
+}
+
+/* Phone landscape: the 0-10 + clear keypad wraps to 4 rows (11 single
+   keys + a 2-wide clear key that doesn't fit the leftover column), which
+   is fine against a tall portrait viewport but taller than a typical
+   landscape one — shrink everything so it fits without scrolling instead
+   of relying on .sr-modal's overflow-y as the only fallback. */
+@media (max-height: 480px) and (orientation: landscape) {
+	.sr-modal-backdrop {
+		align-items: center;
+	}
+
+	.sr-modal {
+		padding: 12px 16px;
+		border-radius: 16px;
+	}
+
+	.sr-modal-title {
+		font-size: 15px;
+	}
+
+	.sr-modal-subtitle {
+		font-size: 11px;
+		margin-bottom: 8px;
+	}
+
+	.sr-keypad-grid {
+		gap: 6px;
+	}
+
+	.sr-key {
+		height: 38px;
+		font-size: 16px;
+		border-radius: 8px;
+	}
+
+	.sr-key-clear {
+		font-size: 11px;
+	}
 }

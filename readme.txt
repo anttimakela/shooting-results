@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.2.2 =
+* Fixed the keypad modal (0–10 + Clear) not fitting on screen in phone landscape orientation — it's now compact and centered below a ~480px-tall viewport, and every modal now scrolls internally as a fallback if it still doesn't fully fit.
 
 = 1.2.1 =
 * The Settings page's session list now has a "Download report" button next to each session, for getting the .xlsx directly without emailing it.
