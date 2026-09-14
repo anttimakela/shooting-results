@@ -96,7 +96,7 @@ class SR_Shortcode {
 		return array(
 			'recordResults'        => __( 'Record Results', 'shooting-results' ),
 			'sessions'              => __( 'Sessions', 'shooting-results' ),
-			'chooseSessionHint'     => __( 'Click a session to edit it.', 'shooting-results' ),
+			'chooseSessionHint'     => __( 'Click a session to edit it. Sent sessions can no longer be edited or viewed.', 'shooting-results' ),
 			'closeSessionHint'      => __( 'Sending the report closes this session — it can no longer be edited or viewed afterward.', 'shooting-results' ),
 			'noSessions'            => __( 'No sessions yet. Start with "Record Results".', 'shooting-results' ),
 			'draft'                 => __( 'Draft', 'shooting-results' ),

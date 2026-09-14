@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.6
+Stable tag: 1.2.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.2.7 =
+* The session list's hint text now also notes that sent sessions can no longer be edited or viewed.
 
 = 1.2.6 =
 * Sending a session's report now closes it: a hint above the button explains this before you send, sent sessions are no longer clickable in the list, and reopening one by URL (or a stale link) is blocked server-side too. After sending, you're taken back to the session list instead of staying on a now-closed session.

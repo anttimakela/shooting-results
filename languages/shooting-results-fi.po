@@ -1,10 +1,10 @@
 # Finnish translation for Shooting Results.
 msgid ""
 msgstr ""
-"Project-Id-Version: Shooting Results 1.2.6\n"
+"Project-Id-Version: Shooting Results 1.2.7\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/shooting-results\n"
-"POT-Creation-Date: 2026-09-14T13:03:29+00:00\n"
-"PO-Revision-Date: 2026-09-14 17:00+0200\n"
+"POT-Creation-Date: 2026-09-14T13:08:50+00:00\n"
+"PO-Revision-Date: 2026-09-14 17:15+0200\n"
 "Last-Translator: Antti Mäkelä\n"
 "Language-Team: Finnish\n"
 "Language: fi\n"
@@ -177,8 +177,8 @@ msgid ""
 "This session has been closed — its report was already sent, and it can no "
 "longer be viewed."
 msgstr ""
-"Tämä ammunta on suljettu — sen raportti on jo lähetetty, eikä sitä voi "
-"enää katsella."
+"Tämä ammunta on suljettu — sen raportti on jo lähetetty, eikä sitä voi enää "
+"katsella."
 
 #: includes/class-sr-ajax.php:162
 msgid "Invalid number of shots per round."
@@ -262,8 +262,11 @@ msgid "Record Results"
 msgstr "Kirjaa tulokset"
 
 #: includes/class-sr-shortcode.php:99
-msgid "Click a session to edit it."
-msgstr "Valitse klikkaamalla muokattava ammunta."
+msgid ""
+"Click a session to edit it. Sent sessions can no longer be edited or viewed."
+msgstr ""
+"Valitse klikkaamalla muokattava ammunta. Lähetettyjä ammuntoja ei voi enää "
+"muokata tai katsella."
 
 #: includes/class-sr-shortcode.php:100
 msgid ""
@@ -377,6 +380,9 @@ msgid ""
 "Remove this shooter's entry from this round? Other rounds are not affected."
 msgstr ""
 "Poistetaanko ampujan tulos tältä kierrokselta? Muut kierrokset eivät muutu."
+
+#~ msgid "Click a session to edit it."
+#~ msgstr "Valitse klikkaamalla muokattava ammunta."
 
 #~ msgid "Continue open session"
 #~ msgstr "Jatka kesken olevaa ammuntaa"
