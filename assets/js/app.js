@@ -20,10 +20,20 @@
 		return fetch( SR.ajaxUrl, {
 			method: 'POST',
 			credentials: 'same-origin',
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				// Some server-level firewall rules only recognize a request
+				// as legitimate AJAX (vs. a direct/blocked PHP hit) when
+				// this header is present — jQuery.ajax() sends it
+				// automatically, but fetch() does not unless asked to.
+				'X-Requested-With': 'XMLHttpRequest',
+			},
 			body: body.toString(),
 		} )
 			.then( function ( res ) {
+				if ( ! res.ok ) {
+					throw new Error( t( 'genericError' ) + ' (HTTP ' + res.status + ')' );
+				}
 				return res.json();
 			} )
 			.then( function ( json ) {

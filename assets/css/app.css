@@ -14,9 +14,15 @@
 }
 
 /* Base styles target a phone-width viewport; .sr-frontend is widened again
-   past 640px so it doesn't stretch edge-to-edge on tablets/desktops. */
+   past 640px so it doesn't stretch edge-to-edge on tablets/desktops.
+   width:100% (not just max-width) keeps this predictable when a page
+   builder's container is display:flex/grid, where an auto-margined block
+   with no explicit width can otherwise collapse to its content size
+   instead of filling the column. */
 .sr-frontend {
 	box-sizing: border-box;
+	display: block;
+	width: 100%;
 	max-width: 100%;
 	padding: 12px;
 	margin: 0 auto;

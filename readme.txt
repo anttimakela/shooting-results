@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,11 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.1.2 =
+* Fixed: some server-level security rules 404'd the plugin's AJAX requests because fetch() (unlike jQuery.ajax()) doesn't send an `X-Requested-With` header by default — now sent explicitly.
+* CSS hardening for page-builder containers (e.g. Breakdance) that use flex/grid layouts, where the shortcode's container could collapse instead of filling its column.
+* AJAX errors now surface the HTTP status in the on-page error message instead of only logging to the console.
 
 = 1.1.1 =
 * Fixed: the front-end shortcode's CSS/JS could fail to load entirely under some page-builder rendering (e.g. Breakdance), leaving the shortcode's container empty with no console errors.
