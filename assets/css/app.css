@@ -39,8 +39,7 @@
 
 @media (min-width: 640px) {
 	.sr-frontend {
-		max-width: 640px;
-		padding: 20px;
+		width: 100%;
 	}
 }
 
