@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.2.9
+Stable tag: 1.2.10
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.2.10 =
+* Fixed the score buttons and the shooter-remove icon picking up page-builder button styling (confirmed on Elementor) — colored pill-shaped background and white text instead of the plain look they're meant to have. Only these two elements are affected, since they sit inside the page builder's widget wrapper while the keypad modal's buttons (unaffected) are appended outside it.
 
 = 1.2.9 =
 * Removed the results page's remaining base 12px padding — .sr-frontend has no padding of its own at any width now.

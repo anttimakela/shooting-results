@@ -272,19 +272,31 @@
 	min-width: 160px;
 }
 
+/* !important below: page builders (Elementor confirmed) apply their own
+   global button styling (colored background, pill border-radius, white
+   text) to any <button> inside their widget wrapper — unlike the keypad
+   modal's buttons, which are appended straight to <body> and so sit
+   outside that wrapper entirely, these cells render inside the normal
+   page content and lose the tie. Scoped to exactly the properties that
+   were bleeding through, not a blanket override. */
 .sr-shot-cell {
 	width: 52px;
 	height: 52px;
 	font-size: 18px;
 	font-weight: 700;
 	cursor: pointer;
-	background: none;
-	border: none;
-	color: #1d2327;
+	background: none !important;
+	border: none !important;
+	border-radius: 0 !important;
+	color: #1d2327 !important;
+	padding: 0 !important;
 }
 
 .sr-shot-cell:hover {
-	background: var(--sr-green-bg);
+	/* Needs !important too: .sr-shot-cell's own background is !important
+	   now (see above), which would otherwise always beat this regardless
+	   of specificity/order. */
+	background: var(--sr-green-bg) !important;
 }
 
 /* Only shown on narrow screens (see the stacked-layout media query below),
@@ -303,9 +315,10 @@
 }
 
 .sr-remove-shooter {
-	background: none;
-	border: none;
-	color: var(--sr-danger);
+	background: none !important;
+	border: none !important;
+	border-radius: 0 !important;
+	color: var(--sr-danger) !important;
 	cursor: pointer;
 	font-size: 16px;
 	padding: 4px;
