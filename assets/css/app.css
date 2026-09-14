@@ -48,6 +48,11 @@
 	display: none !important;
 }
 
+.sr-error {
+	color: var(--sr-danger);
+	font-weight: 600;
+}
+
 .sr-card {
 	background: #fff;
 	border: 1px solid var(--sr-border);

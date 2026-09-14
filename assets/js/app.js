@@ -40,16 +40,26 @@
 			body: body.toString(),
 		} )
 			.then( function ( res ) {
-				if ( ! res.ok ) {
-					throw new Error( t( 'genericError' ) + ' (HTTP ' + res.status + ')' );
-				}
-				return res.json();
-			} )
-			.then( function ( json ) {
-				if ( ! json.success ) {
-					throw new Error( ( json.data && json.data.message ) || t( 'genericError' ) );
-				}
-				return json.data;
+				// Read as text first (not res.json() directly): a rejected
+				// request can come back as plain "-1"/"0" (WordPress's own
+				// check_ajax_referer()/wp_die() failure format) rather than
+				// JSON, and surfacing that raw body is far more diagnostic
+				// than a generic message when something's blocking the
+				// request before it reaches our code (caching, security
+				// rules, an expired nonce on a cached page, etc).
+				return res.text().then( function ( text ) {
+					var json = null;
+					try {
+						json = JSON.parse( text );
+					} catch ( e ) {
+						json = null;
+					}
+					if ( ! res.ok || ! json || ! json.success ) {
+						var detail = ( json && json.data && json.data.message ) || ( text && text.trim() ) || t( 'genericError' );
+						throw new Error( detail + ' (HTTP ' + res.status + ')' );
+					}
+					return json.data;
+				} );
 			} );
 	}
 
@@ -72,12 +82,20 @@
 		el.textContent = saved ? t( 'saved' ) : t( 'saving' );
 	}
 
+	function showError( message ) {
+		root.innerHTML = '<div class="sr-card"><p class="sr-error">' + escapeHtml( message ) + '</p></div>';
+	}
+
 	/* ---------- List view ---------- */
 
 	function loadList() {
-		request( 'sr_list_sessions', {} ).then( function ( data ) {
-			renderList( data.sessions );
-		} );
+		request( 'sr_list_sessions', {} )
+			.then( function ( data ) {
+				renderList( data.sessions );
+			} )
+			.catch( function ( err ) {
+				showError( err.message );
+			} );
 	}
 
 	function renderList( sessions ) {

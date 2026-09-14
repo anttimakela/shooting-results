@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.1.4 =
+* AJAX errors now show the real server response (including WordPress's own "-1"/"0" rejection body from a failed nonce check) instead of a generic message, and are shown on the page itself, not just the console — needed to diagnose a 403 that only appeared in production.
 
 = 1.1.3 =
 * The AJAX request now always uses the current page's protocol (http/https), instead of whatever admin_url() resolved server-side, to rule out a scheme mismatch under local-dev SSL proxies looking like a cross-origin request.
