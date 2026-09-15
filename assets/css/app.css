@@ -13,17 +13,18 @@
 	--sr-text-muted: #6b7280;
 }
 
-/* Base styles target a phone-width viewport; .sr-frontend is widened again
-   past 640px so it doesn't stretch edge-to-edge on tablets/desktops.
-   width:100% (not just max-width) keeps this predictable when a page
-   builder's container is display:flex/grid, where an auto-margined block
-   with no explicit width can otherwise collapse to its content size
-   instead of filling the column. */
+/* Full-bleed: width:100vw + these margins breaks .sr-frontend out of
+   whatever padding its ancestors add (Elementor's column/widget wrapper
+   padding confirmed to otherwise still show up either side), instead of
+   width:100%, which only fills 100% of the PARENT's content box and is
+   still inset by that parent's own padding. */
 .sr-frontend {
 	box-sizing: border-box;
 	display: block;
-	width: 100%;
-	max-width: 100%;
+	width: 100vw;
+	max-width: 100vw;
+	margin-left: calc(50% - 50vw);
+	margin-right: calc(50% - 50vw);
 	/* min-width:0 overrides the flexbox/grid default of min-width:auto,
 	   which some page builders' containers apply (Elementor confirmed):
 	   without it, a wide child like the results table refuses to shrink
@@ -34,7 +35,6 @@
 	   inside this container should ever be able to widen the page. */
 	min-width: 0;
 	overflow-x: hidden;
-	margin: 0 auto;
 	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 	font-size: 15px;
 	color: #1d2327;
@@ -46,10 +46,16 @@
 	box-sizing: border-box;
 }
 
-@media (min-width: 640px) {
-	.sr-frontend {
-		width: 100%;
-	}
+/* Belt-and-suspenders for the page-level horizontal scrollbar some page
+   builders trigger (Elementor confirmed): if anything upstream of
+   .sr-frontend — outside what we can style — is still the source of the
+   overflow, this catches it at the document level instead. Scoped with
+   :has() to pages that actually carry the shortcode, so it doesn't touch
+   the rest of the site (app.css/app.js load on every front-end page, not
+   just this one — see SR_Shortcode::enqueue()). */
+html:has(.sr-frontend),
+body:has(.sr-frontend) {
+	overflow-x: hidden;
 }
 
 .sr-hidden {
