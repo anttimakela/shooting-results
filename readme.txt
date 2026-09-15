@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.3.2
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,9 +77,6 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
-
-= 1.3.2 =
-* The 1.3.1 fix wasn't enough: the results page still showed extra left/right padding from the page builder's own container (Elementor confirmed), and on mobile it could push the keypad modal partly off-screen. The results container now breaks out to the full viewport width regardless of any ancestor's padding, and the page itself is prevented from scrolling horizontally at all on any page carrying the shortcode.
 
 = 1.3.1 =
 * Fixed a page-level horizontal scrollbar (confirmed on Elementor) caused by a wide results table forcing the whole page wider instead of scrolling within its own box — a flexbox container quirk (min-width:auto) some page builders apply. The results container no longer allows anything inside it to widen the page.
