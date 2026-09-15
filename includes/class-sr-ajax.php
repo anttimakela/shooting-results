@@ -163,20 +163,34 @@ class SR_Ajax {
 			}
 		}
 
+		// Distance only applies to rifle, and only 75/100 are valid —
+		// anything else (including shotgun, or the site not using this
+		// feature at all) just leaves the column at its NULL default.
+		$distance = null;
+		if ( 'rifle' === $discipline && isset( $_POST['distance'] ) ) {
+			$posted_distance = absint( $_POST['distance'] );
+			if ( in_array( $posted_distance, array( 75, 100 ), true ) ) {
+				$distance = $posted_distance;
+			}
+		}
+
 		$sessions_table = SR_DB::table( 'sessions' );
 		$rounds_table   = SR_DB::table( 'rounds' );
 
-		$wpdb->insert(
-			$sessions_table,
-			array(
-				'created_by'      => get_current_user_id(),
-				'created_at'      => self::now(),
-				'shots_per_round' => $shots_per_round,
-				'discipline'      => $discipline,
-				'status'          => 'draft',
-			),
-			array( '%d', '%s', '%d', '%s', '%s' )
+		$data    = array(
+			'created_by'      => get_current_user_id(),
+			'created_at'      => self::now(),
+			'shots_per_round' => $shots_per_round,
+			'discipline'      => $discipline,
+			'status'          => 'draft',
 		);
+		$formats = array( '%d', '%s', '%d', '%s', '%s' );
+		if ( null !== $distance ) {
+			$data['distance'] = $distance;
+			$formats[]        = '%d';
+		}
+
+		$wpdb->insert( $sessions_table, $data, $formats );
 		$session_id = (int) $wpdb->insert_id;
 
 		$wpdb->insert(
@@ -446,6 +460,7 @@ class SR_Ajax {
 				'created_at'      => $session->created_at,
 				'shots_per_round' => (int) $session->shots_per_round,
 				'discipline'      => $session->discipline,
+				'distance'        => $session->distance ? (int) $session->distance : null,
 				'status'          => $session->status,
 				'report_email'    => $session->report_email,
 				'report_sent_at'  => $session->report_sent_at,

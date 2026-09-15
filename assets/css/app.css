@@ -159,6 +159,16 @@
 	color: #fff;
 }
 
+.sr-distance-btn {
+	min-width: 90px;
+	font-size: 16px;
+}
+
+.sr-distance-btn.is-active {
+	background: var(--sr-green);
+	color: #fff;
+}
+
 .sr-shotgun-input {
 	width: 100px;
 	text-align: center;

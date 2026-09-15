@@ -94,7 +94,7 @@ special characters) during development.
 ## Data model
 
 ```
-wp_sr_sessions(id, created_by, created_at, shots_per_round, discipline, status, report_email, report_sent_at)
+wp_sr_sessions(id, created_by, created_at, shots_per_round, discipline, distance, status, report_email, report_sent_at)
 wp_sr_shooters(id, session_id, name, sort_order, active)
 wp_sr_rounds(id, session_id, round_number, created_at)
 wp_sr_entries(id, round_id, shooter_id, shots JSON, updated_at)
@@ -110,6 +110,12 @@ session creation) or `shotgun` (`shots_per_round` is always 1 — a shotgun
 round records a single final result, e.g. hits out of however many
 targets, entered as one number up to 200 rather than a per-shot
 breakdown).
+
+`distance` is `NULL` unless the site has the Settings-page "Show Rifle
+75 m and 100 m" option on (`SR_Admin_Page::OPTION_RIFLE_DISTANCES`,
+localized to the front end as `SR.enableRifleDistances`) and the session
+is `rifle` — only then does the new-session modal ask for it, and only
+`75`/`100` are accepted server-side regardless of what's posted.
 
 Removing a shooter (`sr_remove_shooter`) always deletes their entry in
 *whichever round is currently being viewed* (any round, not just the

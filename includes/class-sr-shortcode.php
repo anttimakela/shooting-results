@@ -48,11 +48,12 @@ class SR_Shortcode {
 			'sr-app',
 			'SR',
 			array(
-				'ajaxUrl'          => admin_url( 'admin-ajax.php' ),
-				'nonce'             => wp_create_nonce( 'sr_ajax' ),
-				'postId'            => $post ? $post->ID : 0,
-				'initialSessionId' => $initial_session_id,
-				'i18n'              => self::i18n_strings(),
+				'ajaxUrl'              => admin_url( 'admin-ajax.php' ),
+				'nonce'                 => wp_create_nonce( 'sr_ajax' ),
+				'postId'                => $post ? $post->ID : 0,
+				'initialSessionId'     => $initial_session_id,
+				'enableRifleDistances' => (bool) get_option( SR_Admin_Page::OPTION_RIFLE_DISTANCES ),
+				'i18n'                  => self::i18n_strings(),
 			)
 		);
 	}
@@ -132,6 +133,7 @@ class SR_Shortcode {
 			'result'                => __( 'Result', 'shooting-results' ),
 			'saveResult'            => __( 'Save', 'shooting-results' ),
 			'confirmRemoveShooterRound' => __( 'Remove this shooter\'s entry from this round? Other rounds are not affected.', 'shooting-results' ),
+			'chooseDistance'        => __( 'Choose the distance.', 'shooting-results' ),
 		);
 	}
 }

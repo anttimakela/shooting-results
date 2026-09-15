@@ -127,9 +127,12 @@
 				var badge = isSent
 					? '<span class="sr-badge sr-badge-sent">' + t( 'sent' ) + '</span>'
 					: '<span class="sr-badge sr-badge-draft">' + t( 'draft' ) + '</span>';
+				// A literal middle-dot character here, not the &middot;
+				// entity — this string goes through escapeHtml() below,
+				// which would double-encode an entity into visible text.
 				var detail = 'shotgun' === s.discipline
 					? t( 'shotgun' )
-					: s.shots_per_round + ' ' + t( 'shotsPerRound' );
+					: s.shots_per_round + ' ' + t( 'shotsPerRound' ) + ( s.distance ? ' · ' + s.distance + ' m' : '' );
 				// Sent sessions are closed — no click handler below, and
 				// no data-session-id needed since there's nothing to open.
 				html += '<div class="sr-session-list-item' + ( isSent ? ' is-closed' : '' ) + '"' +
@@ -152,6 +155,7 @@
 
 	function showNewSessionPrompt() {
 		var presets = [ 10 ];
+		var showDistances = !! SR.enableRifleDistances;
 		var html = '<div class="sr-modal-backdrop" id="sr-new-modal">';
 		html += '<div class="sr-modal">';
 		html += '<p class="sr-modal-title">' + t( 'newSession' ) + '</p>';
@@ -171,6 +175,14 @@
 		html += '<div class="sr-row" style="justify-content:center;">';
 		html += '<input type="number" min="1" max="200" id="sr-custom-shots" class="sr-input" placeholder="' + t( 'custom' ) + '" style="width:100px;text-align:center;">';
 		html += '</div>';
+
+		if ( showDistances ) {
+			html += '<p class="sr-modal-subtitle" style="margin-top:14px;">' + t( 'chooseDistance' ) + '</p>';
+			html += '<div class="sr-row" style="justify-content:center;">';
+			html += '<button type="button" class="sr-btn sr-distance-btn" data-distance="75">75 m</button>';
+			html += '<button type="button" class="sr-btn sr-distance-btn" data-distance="100">100 m</button>';
+			html += '</div>';
+		}
 		html += '</div>';
 
 		html += '<div class="sr-row" style="justify-content:center;margin-top:18px;">';
@@ -185,8 +197,14 @@
 
 		var discipline = '';
 		var chosen = 0;
+		var chosenDistance = 0;
 		var startBtn = document.getElementById( 'sr-start-session' );
 		var rifleOptions = document.getElementById( 'sr-rifle-options' );
+
+		function updateStartEnabled() {
+			var ready = chosen > 0 && ( ! showDistances || 'shotgun' === discipline || chosenDistance > 0 );
+			startBtn.disabled = ! ready;
+		}
 
 		wrap.querySelectorAll( '.sr-discipline-btn' ).forEach( function ( btn ) {
 			btn.addEventListener( 'click', function () {
@@ -199,12 +217,11 @@
 				if ( 'shotgun' === discipline ) {
 					rifleOptions.classList.add( 'sr-hidden' );
 					chosen = 1;
-					startBtn.disabled = false;
 				} else {
 					rifleOptions.classList.remove( 'sr-hidden' );
 					chosen = 0;
-					startBtn.disabled = true;
 				}
+				updateStartEnabled();
 			} );
 		} );
 
@@ -216,7 +233,7 @@
 				} );
 				btn.classList.add( 'is-active' );
 				document.getElementById( 'sr-custom-shots' ).value = '';
-				startBtn.disabled = false;
+				updateStartEnabled();
 			} );
 		} );
 		document.getElementById( 'sr-custom-shots' ).addEventListener( 'input', function ( e ) {
@@ -225,13 +242,23 @@
 			wrap.querySelectorAll( '.sr-preset-btn' ).forEach( function ( b ) {
 				b.classList.remove( 'is-active' );
 			} );
-			startBtn.disabled = ! ( chosen > 0 );
+			updateStartEnabled();
+		} );
+		wrap.querySelectorAll( '.sr-distance-btn' ).forEach( function ( btn ) {
+			btn.addEventListener( 'click', function () {
+				chosenDistance = parseInt( btn.getAttribute( 'data-distance' ), 10 );
+				wrap.querySelectorAll( '.sr-distance-btn' ).forEach( function ( b ) {
+					b.classList.remove( 'is-active' );
+				} );
+				btn.classList.add( 'is-active' );
+				updateStartEnabled();
+			} );
 		} );
 		document.getElementById( 'sr-cancel-new' ).addEventListener( 'click', function () {
 			wrap.remove();
 		} );
 		startBtn.addEventListener( 'click', function () {
-			request( 'sr_create_session', { shots_per_round: chosen, discipline: discipline } ).then( function ( data ) {
+			request( 'sr_create_session', { shots_per_round: chosen, discipline: discipline, distance: chosenDistance || '' } ).then( function ( data ) {
 				wrap.remove();
 				applyState( data );
 			} );
@@ -288,7 +315,10 @@
 		var isShotgun = 'shotgun' === session.discipline;
 
 		html += '<div class="sr-card">';
-		html += '<h2>' + ( isShotgun ? t( 'shotgun' ) : session.shots_per_round + ' ' + t( 'shotsPerRound' ) ) + '</h2>';
+		var headerText = isShotgun
+			? t( 'shotgun' )
+			: session.shots_per_round + ' ' + t( 'shotsPerRound' ) + ( session.distance ? ' · ' + session.distance + ' m' : '' );
+		html += '<h2>' + escapeHtml( headerText ) + '</h2>';
 
 		html += '<div class="sr-round-tabs">';
 		state.rounds.forEach( function ( r ) {

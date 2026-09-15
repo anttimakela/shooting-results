@@ -12,11 +12,25 @@ defined( 'ABSPATH' ) || exit;
 
 class SR_Admin_Page {
 
-	const PAGE_SLUG = 'shooting-results';
+	const PAGE_SLUG            = 'shooting-results';
+	const OPTION_RIFLE_DISTANCES = 'sr_enable_rifle_distances';
 
 	public static function init() {
 		add_action( 'admin_menu', array( __CLASS__, 'register_menu' ) );
 		add_action( 'admin_post_sr_download_report', array( __CLASS__, 'download_report' ) );
+		add_action( 'admin_init', array( __CLASS__, 'register_settings' ) );
+	}
+
+	public static function register_settings() {
+		register_setting(
+			'sr_settings_group',
+			self::OPTION_RIFLE_DISTANCES,
+			array(
+				'type'              => 'boolean',
+				'sanitize_callback' => 'rest_sanitize_boolean',
+				'default'           => false,
+			)
+		);
 	}
 
 	/**
@@ -111,6 +125,19 @@ class SR_Admin_Page {
 				<p><?php esc_html_e( 'No WordPress account is needed to record results — just the page password. That also means recording can continue on a different device mid-competition: whoever takes over just opens the same page, enters the password, and picks the open session from the list.', 'shooting-results' ); ?></p>
 			</div>
 
+			<div class="card sr-settings-card">
+				<h2><?php esc_html_e( 'Options', 'shooting-results' ); ?></h2>
+				<form method="post" action="options.php">
+					<?php settings_fields( 'sr_settings_group' ); ?>
+					<label>
+						<input type="checkbox" name="<?php echo esc_attr( self::OPTION_RIFLE_DISTANCES ); ?>" value="1" <?php checked( get_option( self::OPTION_RIFLE_DISTANCES ), 1 ); ?> />
+						<?php esc_html_e( 'Show Rifle 75 m and 100 m', 'shooting-results' ); ?>
+					</label>
+					<p class="description"><?php esc_html_e( 'When enabled, starting a new rifle session also asks for the distance (75 m or 100 m).', 'shooting-results' ); ?></p>
+					<?php submit_button(); ?>
+				</form>
+			</div>
+
 			<?php self::render_sessions_section(); ?>
 		</div>
 		<?php
@@ -145,6 +172,9 @@ class SR_Admin_Page {
 										esc_html_e( 'Shotgun', 'shooting-results' );
 									} else {
 										echo esc_html( $session->shots_per_round ) . ' ' . esc_html__( 'shots per round', 'shooting-results' );
+										if ( $session->distance ) {
+											echo ' &middot; ' . esc_html( $session->distance ) . ' m';
+										}
 									}
 									?>
 								</td>
