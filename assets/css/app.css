@@ -163,9 +163,17 @@
 	font-size: 20px;
 }
 
+/* !important below: .sr-btn's own background/color became !important to
+   beat the theme's global button styling (see the .sr-btn rule above),
+   which — since !important always wins over a non-!important
+   declaration regardless of how specific the selector is — silently ate
+   these active-state colors too, even though ".sr-discipline-btn.is-
+   active" is a more specific selector than plain ".sr-btn". Picked
+   rifle/shotgun, a shots preset, or a distance no longer looked
+   selected. */
 .sr-preset-btn.is-active {
-	background: var(--sr-green);
-	color: #fff;
+	background: var(--sr-green) !important;
+	color: #fff !important;
 }
 
 .sr-discipline-btn {
@@ -175,8 +183,8 @@
 }
 
 .sr-discipline-btn.is-active {
-	background: var(--sr-green);
-	color: #fff;
+	background: var(--sr-green) !important;
+	color: #fff !important;
 }
 
 .sr-distance-btn {
@@ -185,8 +193,8 @@
 }
 
 .sr-distance-btn.is-active {
-	background: var(--sr-green);
-	color: #fff;
+	background: var(--sr-green) !important;
+	color: #fff !important;
 }
 
 .sr-shotgun-input {
@@ -253,18 +261,24 @@
 	margin-bottom: 14px;
 }
 
+/* !important: same theme/builder button-styling exposure as .sr-btn —
+   without it, an inactive round tab could pick up the theme's own
+   button color instead of our neutral gray, making it look identical to
+   the active (green) tab. */
 .sr-round-tab {
 	padding: 8px 16px;
-	border-radius: 999px;
-	background: #f3f3f3;
+	border-radius: 999px !important;
+	background: #f3f3f3 !important;
+	color: #1d2327 !important;
 	font-weight: 600;
 	cursor: pointer;
-	border: none;
+	border: none !important;
+	box-shadow: none !important;
 }
 
 .sr-round-tab.is-active {
-	background: var(--sr-green);
-	color: #fff;
+	background: var(--sr-green) !important;
+	color: #fff !important;
 }
 
 .sr-table-scroll {

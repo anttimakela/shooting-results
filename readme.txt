@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.3.6
+Stable tag: 1.3.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.3.7 =
+* Fixed the selected/active highlight disappearing on the rifle/shotgun, distance, shots-per-round, and round-tab buttons — a side effect of the 1.3.4 theme-styling fix: making `.sr-btn`'s own color `!important` meant it also beat the (non-`!important`) active-state green, regardless of that selector being more specific. Round tabs had the same underlying exposure independently. Whoever's recording results can now actually tell what they've selected again.
 
 = 1.3.6 =
 * Security hardening: shooter names starting with `=`, `+`, `-`, or `@` are now neutralized in the exported .xlsx report, as defense-in-depth against a name being interpreted as a live formula by whoever opens the file.
