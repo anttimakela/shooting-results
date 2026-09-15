@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.3.3
+Stable tag: 1.3.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.3.4 =
+* Fixed the keypad modal's 0–10 grid not fitting 4 across (confirmed cause: the Astra theme's global `button { padding: 17px 40px }` style, which nothing in the modal's own CSS had been competing with). Also hardened the modal's buttons and the main action buttons against theme/Elementor global button styling more generally (background, color, border, shadow), since a separate Elementor kit rule was found to carry enough CSS specificity to override some of them too.
 
 = 1.3.3 =
 * Reverted 1.3.2 (full-bleed layout + document-level overflow hiding) — it broke the page view. The problem it was chasing turns out to be scoped to just the keypad modal, not the whole page; back to the 1.3.1 CSS while that gets fixed properly.

@@ -102,19 +102,29 @@
 	border-top: 2px solid var(--sr-border);
 }
 
+/* !important on background/color/border/box-shadow throughout this
+   button family: confirmed on a live site that an Elementor kit rule
+   (selector `.elementor-kit-<id> button`, i.e. one class + the element
+   type) carries higher CSS specificity than our plain single-class
+   selectors like `.sr-btn`, so its background-color/color/box-shadow/
+   border can win even here, on the main page, not just in modals. Sizing
+   (padding etc.) isn't included here — those we do declare ourselves,
+   which already beats a same-or-lower-specificity theme rule like
+   Astra's bare `button { padding: 17px 40px }` without needing !important. */
 .sr-btn {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
 	gap: 6px;
-	border: 1px solid transparent;
-	border-radius: 6px;
+	border: 1px solid transparent !important;
+	border-radius: 6px !important;
+	box-shadow: none !important;
 	padding: 10px 18px;
 	font-size: 14px;
 	font-weight: 600;
 	cursor: pointer;
-	background: #f3f3f3;
-	color: #1d2327;
+	background: #f3f3f3 !important;
+	color: #1d2327 !important;
 }
 
 .sr-btn:hover {
@@ -122,19 +132,19 @@
 }
 
 .sr-btn-primary {
-	background: var(--sr-green);
-	color: #fff;
+	background: var(--sr-green) !important;
+	color: #fff !important;
 }
 
 .sr-btn-accent {
-	background: var(--sr-orange);
-	color: #fff;
+	background: var(--sr-orange) !important;
+	color: #fff !important;
 }
 
 .sr-btn-danger {
-	background: transparent;
-	color: var(--sr-danger);
-	border-color: var(--sr-danger);
+	background: transparent !important;
+	color: var(--sr-danger) !important;
+	border-color: var(--sr-danger) !important;
 	padding: 6px 10px;
 }
 
@@ -433,6 +443,20 @@
 }
 
 /* Keypad modal */
+/* Every modal is appended straight to <body> (see openKeypad() /
+   showNewSessionPrompt() in app.js) so it can overlay the whole
+   viewport — which also means it sits OUTSIDE .sr-frontend, and never
+   gets the ".sr-frontend *" box-sizing:border-box reset above. Confirmed
+   on Elementor: its theme applies its own padding/border to bare
+   <button> elements, and without border-box that padding adds on top of
+   our sizing instead of being contained within it, so e.g. the keypad's
+   4-column grid no longer fits 4 across. Reset it explicitly here,
+   scoped to the modal subtree, regardless of where in the DOM it lives. */
+.sr-modal-backdrop,
+.sr-modal-backdrop * {
+	box-sizing: border-box;
+}
+
 .sr-modal-backdrop {
 	position: fixed;
 	inset: 0;
@@ -475,25 +499,38 @@
 	gap: 10px;
 }
 
+/* !important throughout below: two separate theme/builder-level global
+   button styles confirmed bleeding into these (Astra's theme-wide
+   `button { padding: 17px 40px; ... }`, and an Elementor kit rule with
+   background/color/box-shadow/border — the latter's selector,
+   `.elementor-kit-* button`, is one class + one element = HIGHER CSS
+   specificity than a plain single-class selector like `.sr-key`, so it
+   can win even though it's "just a global button style"). */
 .sr-key {
+	width: 100%;
 	height: 64px;
-	border-radius: 12px;
-	border: 1px solid var(--sr-border);
-	background: #f7f7f7;
+	min-width: 0 !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	border-radius: 12px !important;
+	border: 1px solid var(--sr-border) !important;
+	box-shadow: none !important;
+	background: #f7f7f7 !important;
+	color: #1d2327 !important;
 	font-size: 24px;
 	font-weight: 800;
 	cursor: pointer;
 }
 
 .sr-key.is-active {
-	background: var(--sr-green);
-	color: #fff;
-	border-color: var(--sr-green);
+	background: var(--sr-green) !important;
+	color: #fff !important;
+	border-color: var(--sr-green) !important;
 }
 
 .sr-key-clear {
 	grid-column: span 2;
-	color: var(--sr-danger);
+	color: var(--sr-danger) !important;
 	font-size: 14px;
 }
 
