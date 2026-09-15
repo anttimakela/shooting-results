@@ -3,7 +3,7 @@
  * Plugin Name:       Shooting Results
  * Plugin URI:         https://github.com/anttimakela/shooting-results
  * Description:        Fast, big-button competition results recording for shooting ranges — every score autosaves immediately, so a page refresh never loses data. Record results from any device on a password-protected page, and export an Excel report by email.
- * Version:             1.3.4
+ * Version:             1.3.5
  * Requires at least:  6.4
  * Requires PHP:        7.4
  * Author:              Antti Mäkelä
@@ -17,7 +17,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'SR_VERSION', '1.3.4' );
+define( 'SR_VERSION', '1.3.5' );
 define( 'SR_PLUGIN_FILE', __FILE__ );
 define( 'SR_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'SR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );

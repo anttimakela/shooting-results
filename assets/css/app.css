@@ -274,14 +274,20 @@
 	border-radius: 8px;
 }
 
+/* Astra's theme-wide `table, td, th { border: 1px solid ... }` (all four
+   sides) otherwise draws a full grid over this table instead of just the
+   row-separator lines it's designed with — reset it here and re-declare
+   only the bottom border we actually want. */
 .sr-table {
 	border-collapse: collapse;
+	border: none !important;
 	width: 100%;
 }
 
 .sr-table th,
 .sr-table td {
-	border-bottom: 1px solid var(--sr-border);
+	border: none !important;
+	border-bottom: 1px solid var(--sr-border) !important;
 	padding: 0;
 	text-align: center;
 	white-space: nowrap;
@@ -392,7 +398,10 @@
 
 	.sr-table td {
 		display: block;
-		border-bottom: none;
+		/* !important: the base rule's border-bottom is !important too
+		   (see above, needed to beat Astra's table/td/th border), so this
+		   has to match or it would never win. */
+		border-bottom: none !important;
 		padding: 0;
 		white-space: normal;
 	}
@@ -423,7 +432,12 @@
 	.sr-total-cell {
 		min-width: 44px;
 		height: 44px;
-		display: flex;
+		/* !important: .sr-table td (class+element, higher specificity than
+		   .sr-total-cell's single class) sets display:block right above,
+		   which otherwise silently wins and makes align-items/
+		   justify-content do nothing — the value sat top-left instead of
+		   centered in its green box. */
+		display: flex !important;
 		align-items: center;
 		justify-content: center;
 		border-radius: 6px;
