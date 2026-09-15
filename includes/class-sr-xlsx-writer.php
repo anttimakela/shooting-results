@@ -136,7 +136,7 @@ class SR_Xlsx_Writer {
 				if ( is_numeric( $value ) ) {
 					$xml .= '<c r="' . $ref . '"' . $style . '><v>' . $this->xml_escape( (string) $value ) . '</v></c>';
 				} else {
-					$xml .= '<c r="' . $ref . '" t="inlineStr"' . $style . '><is><t xml:space="preserve">' . $this->xml_escape( (string) $value ) . '</t></is></c>';
+					$xml .= '<c r="' . $ref . '" t="inlineStr"' . $style . '><is><t xml:space="preserve">' . $this->xml_escape( $this->neutralize_formula( (string) $value ) ) . '</t></is></c>';
 				}
 			}
 			$xml .= '</row>';
@@ -144,6 +144,24 @@ class SR_Xlsx_Writer {
 
 		$xml .= '</sheetData></worksheet>';
 		return $xml;
+	}
+
+	/**
+	 * Defense-in-depth against spreadsheet "formula injection": a shooter
+	 * name is free text a site visitor with the page password can set,
+	 * and if it started with =, +, -, or @, some spreadsheet software
+	 * treats it as a live formula when the file is later opened. Cells
+	 * are already written with an explicit inlineStr type (not a bare/
+	 * general type), which itself should stop most formula evaluation —
+	 * this is a cheap second layer on top of that, standard practice for
+	 * any spreadsheet export of user-supplied text (the CSV-injection
+	 * mitigation OWASP recommends, applied here too).
+	 */
+	private function neutralize_formula( $text ) {
+		if ( isset( $text[0] ) && false !== strpos( "=+-@\t\r", $text[0] ) ) {
+			return "'" . $text;
+		}
+		return $text;
 	}
 
 	private function column_letter( $index ) {

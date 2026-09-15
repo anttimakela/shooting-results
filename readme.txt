@@ -4,7 +4,7 @@ Tags: shooting, sports, results, scoring, excel
 Requires at least: 6.4
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.3.5
+Stable tag: 1.3.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -77,6 +77,9 @@ password automatically, same as WordPress's normal password-protected page
 behavior.
 
 == Changelog ==
+
+= 1.3.6 =
+* Security hardening: shooter names starting with `=`, `+`, `-`, or `@` are now neutralized in the exported .xlsx report, as defense-in-depth against a name being interpreted as a live formula by whoever opens the file.
 
 = 1.3.5 =
 * Overrode Astra's theme-wide `table, td, th { border: 1px solid ... }`, which was drawing a full grid over the results table instead of just the intended row-separator lines.
