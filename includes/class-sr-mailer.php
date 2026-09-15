@@ -38,8 +38,9 @@ class SR_Mailer {
 			$shooter_by_id[ (int) $shooter->id ] = $shooter;
 		}
 
-		$writer         = new SR_Xlsx_Writer();
-		$totals_by_shooter = array();
+		$writer             = new SR_Xlsx_Writer();
+		$totals_by_shooter  = array();
+		$rounds_by_shooter  = array();
 
 		foreach ( $rounds as $round ) {
 			$entries = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM {$entries_table} WHERE round_id = %d", $round->id ) );
@@ -82,8 +83,10 @@ class SR_Mailer {
 
 				if ( ! isset( $totals_by_shooter[ $entry->shooter_id ] ) ) {
 					$totals_by_shooter[ $entry->shooter_id ] = 0;
+					$rounds_by_shooter[ $entry->shooter_id ] = 0;
 				}
 				$totals_by_shooter[ $entry->shooter_id ] += $total;
+				++$rounds_by_shooter[ $entry->shooter_id ];
 			}
 
 			/* translators: %d: round number */
@@ -94,9 +97,13 @@ class SR_Mailer {
 			array( __( 'Shooter', 'shooting-results' ), __( 'Rounds', 'shooting-results' ), __( 'Total', 'shooting-results' ) ),
 		);
 		foreach ( $shooters as $shooter ) {
+			// Rounds actually entered, not the session's total round count —
+			// a shooter removed partway through has fewer entries than
+			// count($rounds), and the summary should reflect that instead of
+			// crediting them with rounds they were never part of.
 			$summary_rows[] = array(
 				$shooter->name,
-				count( $rounds ),
+				isset( $rounds_by_shooter[ $shooter->id ] ) ? $rounds_by_shooter[ $shooter->id ] : 0,
 				isset( $totals_by_shooter[ $shooter->id ] ) ? $totals_by_shooter[ $shooter->id ] : 0,
 			);
 		}
