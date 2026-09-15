@@ -187,7 +187,7 @@ msgfmt -o languages/shooting-results-fi.mo languages/shooting-results-fi.po
 ```bash
 # from your WordPress install:
 cd wp-content/plugins
-ln -s /Users/anttimakela/Projects/shooting-results shooting-results
+ln -s /path/to/shooting-results shooting-results
 wp plugin activate shooting-results
 ```
 
